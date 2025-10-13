@@ -1,276 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CV – Two-Column (A4, HTML Preview)</title>
-<link rel="stylesheet" href="/css/style.css">
-<script src="/js/script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional CV Template</title>
+    <link rel="stylesheet" href="/css/template.css">
+    <script src="/js/template.js"></script>
 </head>
 <body>
-
-  <!-- Toolbar -->
-  <div class="toolbar">
-    <label>
-      Upload Photo
-      <input id="photoInput" type="file" accept="image/*" style="display:none" />
-    </label>
-    <button id="clearPhoto">Remove Photo</button>
-
-    <button id="addExp" class="ghost">Add Experience</button>
-    <button id="addBullet" class="ghost" title="Adds a bullet to the last selected experience">Add Bullet</button>
-
-    <!-- Add section toggles -->
-    <button id="addPORSection" class="ghost" title="Add Positions of Responsibility section if missing">Add POR Section</button>
-    <button id="addHobbySection" class="ghost" title="Add Hobbies section if missing">Add Hobbies Section</button>
-
-    <div class="spacer"></div>
-    <button class="primary" onclick="window.print()">Print / Save PDF</button>
-  </div>
-
-  <div class="wrap">
-    <div class="page" id="a4">
-
-      <!-- Header -->
-      <header class="header">
-        <div class="photo" id="photoSlot" aria-label="Headshot">
-          <span id="monogram">SS</span>
-          <img id="headshot" alt="Headshot" style="display:none;" />
-        </div>
-
-        <div class="heading">
-          <div class="name" contenteditable="true" data-field="full_name">Shubham Singh</div>
-          <div class="role" contenteditable="true" data-field="job_title">Product Manager</div>
-        </div>
-
-        <div class="contact" contenteditable="true" data-field="contact_line" title="Use | as separator">
-          shubham@example.com | +91&nbsp;98765&nbsp;43210 | Pune, IN | linkedin.com/in/shubhamsingh
-        </div>
-      </header>
-      <div class="divider"></div>
-
-      <!-- Columns -->
-      <main class="columns">
-
-        <!-- LEFT: Sidebar (38%) -->
-        <section id="leftColumn">
-
-          <!-- Summary -->
-          <div class="section">
-            <div class="title">SUMMARY / PROFILE</div>
-            <div class="rule"></div>
-            <div class="text" contenteditable="true" data-field="summary">
-              Product leader with 7+ years building data-driven consumer products. Led cross-functional teams to launch eco-friendly devices; shipped 3 products reaching 1M+ users.
-            </div>
-          </div>
-
-          <!-- Skills (bulleted) -->
-          <div class="section" id="skillsSection">
-            <div class="title">
-              SKILLS
-              <span class="small-actions">
-                <button type="button" id="btnAddSkill">Add Skill</button>
-              </span>
-            </div>
-            <div class="rule"></div>
-            <ul class="bullets" id="skillsList">
-              <li contenteditable="true">Product Strategy</li>
-              <li contenteditable="true">Roadmapping</li>
-              <li contenteditable="true">SQL</li>
-              <li contenteditable="true">A/B Testing</li>
-              <li contenteditable="true">Python</li>
-              <li contenteditable="true">Power BI</li>
-            </ul>
-            <div class="inline-controls">
-              <button type="button" id="btnRemoveLastSkill">Remove last skill</button>
-            </div>
-          </div>
-
-          <!-- Education (multiple rows) -->
-          <div class="section" id="educationSection">
-            <div class="title">
-              EDUCATION
-              <span class="small-actions">
-                <button type="button" id="btnAddEdu">Add Education</button>
-              </span>
-            </div>
-            <div class="rule"></div>
-            <div class="edu-list" id="eduList">
-              <div class="edu-row">
-                <div contenteditable="true">IIT (Example)</div>
-                <div contenteditable="true">B.Tech, Mechanical</div>
-                <div class="muted" contenteditable="true">08/2016 – 05/2020</div>
-                <button type="button" class="remove" title="Remove">Remove</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Certifications (bulleted) -->
-          <div class="section" id="certsSection">
-            <div class="title">
-              CERTIFICATIONS
-              <span class="small-actions">
-                <button type="button" id="btnAddCert">Add Certification</button>
-              </span>
-            </div>
-            <div class="rule"></div>
-            <ul class="bullets" id="certsList">
-              <li contenteditable="true">Pragmatic PMC Level I (09/2023)</li>
-              <li contenteditable="true">Best Product Launch – Eco Awards (2024)</li>
-            </ul>
-            <div class="inline-controls">
-              <button type="button" id="btnRemoveLastCert">Remove last certification</button>
-            </div>
-          </div>
-
-          <!-- PORs (Positions of Responsibility) -->
-          <div class="section" id="porSection">
-            <div class="title">
-              POSITIONS OF RESPONSIBILITY
-              <span class="small-actions">
-                <button type="button" id="btnRemovePORSection" title="Remove entire POR section">Remove Section</button>
-                <button type="button" id="btnAddPOR">Add POR</button>
-              </span>
-            </div>
-            <div class="rule"></div>
-            <ul class="bullets" id="porList">
-              <li contenteditable="true">Placement Committee Member – Coordinated 15+ company drives (2019–2020)</li>
-            </ul>
-            <div class="inline-controls">
-              <button type="button" id="btnRemoveLastPOR">Remove last POR</button>
-            </div>
-          </div>
-
-          <!-- Hobbies -->
-          <div class="section" id="hobbySection">
-            <div class="title">
-              HOBBIES
-              <span class="small-actions">
-                <button type="button" id="btnRemoveHobbySection" title="Remove entire Hobbies section">Remove Section</button>
-                <button type="button" id="btnAddHobby">Add Hobby</button>
-              </span>
-            </div>
-            <div class="rule"></div>
-            <ul class="bullets" id="hobbyList">
-              <li contenteditable="true">Trail running (10k), photography, chess (~1600 ELO blitz)</li>
-            </ul>
-            <div class="inline-controls">
-              <button type="button" id="btnRemoveLastHobby">Remove last hobby</button>
-            </div>
-          </div>
-
-        </section>
-
-        <!-- RIGHT: Experience / Projects (62%) -->
-        <section id="experienceSection">
-          <div class="section">
-            <div class="title">EXPERIENCE / PROJECTS</div>
-            <div class="rule"></div>
-
-            <!-- TEMPLATE for experience entry -->
-            <template id="expTemplate">
-              <div class="exp-entry" data-repeat="experience" tabindex="0">
-                <div class="exp-head">
-                  <div class="exp-title" contenteditable="true">Job Title</div>
-                  <div class="exp-company" contenteditable="true">Company</div>
-                  <div class="exp-location" contenteditable="true">City</div>
-                  <div class="exp-dates" contenteditable="true">MM/YYYY – MM/YYYY</div>
+    <div class="cv-container">
+        <!-- Top 30% Image Section -->
+        <div class="image-section">
+            <!-- <div class="image-container">
+                <div class="photo-placeholder">
+                    <i class="fas fa-user"></i>
+                    <span>Click to Upload Professional Headshot</span>
                 </div>
-                <ul class="exp-bullets">
-                  <li contenteditable="true">Impact statement with a metric and action result.</li>
-                </ul>
-                <div class="inline-controls">
-                  <button type="button" class="btnAddBullet">Add bullet</button>
-                  <button type="button" class="btnRemoveEntry">Remove entry</button>
+            </div> -->
+            <img src = "images/img_ex.webp" alt="Headshot" class="headshot" id="headshot">
+            <div class="curve"></div>
+        </div>
+
+        <!-- CV Content -->
+        <div class="cv-content">
+            <div class="header-content">
+                <h1 contenteditable="true" class="editable" data-field="name">John Doe</h1>
+                <h2 contenteditable="true" class="editable" data-field="title">Software Engineer</h2>
+                
+                <div class="contact-info">
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span contenteditable="true" class="editable" data-field="email">johndoe@example.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span contenteditable="true" class="editable" data-field="phone">+1 183-456-7890</span>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="contact-item">
+                            <i class="fas fa-globe"></i>
+                            <span contenteditable="true" class="editable" data-field="website">portfolio.example.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <span contenteditable="true" class="editable" data-field="linkedin">linkedin.com/in/johndoe</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </template>
-
-            <!-- Entry 1 -->
-            <div class="exp-entry" data-repeat="experience" tabindex="0">
-              <div class="exp-head">
-                <div class="exp-title" contenteditable="true" data-field="exp_1_title">Product Manager</div>
-                <div class="exp-company" contenteditable="true" data-field="exp_1_company">EcoShop</div>
-                <div class="exp-location" contenteditable="true" data-field="exp_1_location">Pune</div>
-                <div class="exp-dates" contenteditable="true" data-field="exp_1_dates">03/2023 – Present</div>
-              </div>
-              <ul class="exp-bullets">
-                <li contenteditable="true" data-field="exp_1_b1">Drove GTM for eco-friendly kitchen appliance; achieved ₹3.2Cr ARR in 9 months.</li>
-                <li contenteditable="true" data-field="exp_1_b2">Built pricing model; improved contribution margin by 12pp.</li>
-                <li contenteditable="true" data-field="exp_1_b3">Led AI personalization POC; increased CVR by 18%.</li>
-              </ul>
-              <div class="inline-controls">
-                <button type="button" class="btnAddBullet">Add bullet</button>
-                <button type="button" class="btnRemoveEntry">Remove entry</button>
-              </div>
             </div>
 
-            <!-- Entry 2 -->
-            <div class="exp-entry" data-repeat="experience" tabindex="0">
-              <div class="exp-head">
-                <div class="exp-title" contenteditable="true" data-field="exp_2_title">Associate PM</div>
-                <div class="exp-company" contenteditable="true" data-field="exp_2_company">GreenTech</div>
-                <div class="exp-location" contenteditable="true" data-field="exp_2_location">Bengaluru</div>
-                <div class="exp-dates" contenteditable="true" data-field="exp_2_dates">08/2020 – 02/2023</div>
-              </div>
-              <ul class="exp-bullets">
-                <li contenteditable="true" data-field="exp_2_b1">Prioritized roadmap using ICE; reduced churn by 4%.</li>
-                <li contenteditable="true" data-field="exp_2_b2">Shipped analytics dashboard; +25% DAU engagement.</li>
-              </ul>
-              <div class="inline-controls">
-                <button type="button" class="btnAddBullet">Add bullet</button>
-                <button type="button" class="btnRemoveEntry">Remove entry</button>
-              </div>
+            <div class="cv-body">
+                <div class="left-column">
+                    <section class="about-section">
+                        <h3>About</h3>
+                        <p contenteditable="true" class="editable" data-field="about">
+                            Passionate Software Engineer with 3 years of experience in full stack development. 
+                            Skilled in scalable web applications, delivering seamless user experiences. 
+                            Adept at cross-functional collaboration and leveraging modern tech stacks to solve real-world problems.
+                        </p>
+                    </section>
+
+                    <section class="personal-details">
+                        <h3>Personal Details</h3>
+                        <div class="detail-item">
+                            <strong>Email</strong>
+                            <span contenteditable="true" class="editable" data-field="personal-email">johndoe@example.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Phone</strong>
+                            <span contenteditable="true" class="editable" data-field="personal-phone">+1-135-456-7890</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>LinkedIn</strong>
+                            <span contenteditable="true" class="editable" data-field="personal-linkedin">linkedin.com/in/johndoe</span>
+                        </div>
+                    </section>
+
+                    <section class="skills-section">
+                        <h3>Skills</h3>
+                        <div class="skills-grid">
+                            <span contenteditable="true" class="skill-tag editable" data-field="skill1">JavaScript</span>
+                            <span contenteditable="true" class="skill-tag editable" data-field="skill2">React</span>
+                            <span contenteditable="true" class="skill-tag editable" data-field="skill3">Node.js</span>
+                            <span contenteditable="true" class="skill-tag editable" data-field="skill4">Python</span>
+                            <span contenteditable="true" class="skill-tag editable" data-field="skill5">AWS</span>
+                            <span contenteditable="true" class="skill-tag editable" data-field="skill6">HTML/CSS</span>
+                        </div>
+                    </section>
+
+                    <section class="languages-section">
+                        <h3>Languages</h3>
+                        <div class="languages-list">
+                            <div class="language-item">
+                                <span contenteditable="true" class="editable" data-field="lang1">English</span>
+                                <span class="proficiency">Native</span>
+                            </div>
+                            <div class="language-item">
+                                <span contenteditable="true" class="editable" data-field="lang2">Spanish</span>
+                                <span class="proficiency">Intermediate</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="right-column">
+                    <section class="experience-section">
+                        <h3>Experience</h3>
+                        <div class="experience-item">
+                            <div class="job-header">
+                                <h4 contenteditable="true" class="editable" data-field="job1-title">Software Engineer</h4>
+                                <span contenteditable="true" class="date editable" data-field="job1-date">Jun 2020 – Present</span>
+                            </div>
+                            <ul class="job-description">
+                                <li contenteditable="true" class="editable" data-field="job1-desc1">
+                                    Designed and implemented user features using React and Node.js
+                                </li>
+                                <li contenteditable="true" class="editable" data-field="job1-desc2">
+                                    Collaborated with design & QA teams to deliver high-impact features
+                                </li>
+                                <li contenteditable="true" class="editable" data-field="job1-desc3">
+                                    Optimized API performance, reducing latency by 23%
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="experience-item">
+                            <div class="job-header">
+                                <h4 contenteditable="true" class="editable" data-field="job2-title">Web Developer</h4>
+                                <span contenteditable="true" class="date editable" data-field="job2-date">Jul 2018 – May 2020</span>
+                            </div>
+                            <ul class="job-description">
+                                <li contenteditable="true" class="editable" data-field="job2-desc1">
+                                    Developed responsive web applications using HTML, CSS and JavaScript
+                                </li>
+                                <li contenteditable="true" class="editable" data-field="job2-desc2">
+                                    Improved API performance by 15%
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="education-section">
+                        <h3>Education</h3>
+                        <div class="education-item">
+                            <h4 contenteditable="true" class="editable" data-field="edu1-degree">Bachelor of Computer Science</h4>
+                            <span contenteditable="true" class="institution editable" data-field="edu1-school">University of Technology</span>
+                            <span contenteditable="true" class="date editable" data-field="edu1-date">2014 - 2018</span>
+                        </div>
+                    </section>
+
+                    <section class="certifications-section">
+                        <h3>Certifications</h3>
+                        <div class="certification-item">
+                            <span contenteditable="true" class="editable" data-field="cert1">AWS Certified Developer - Associate</span>
+                        </div>
+                        <div class="certification-item">
+                            <span contenteditable="true" class="editable" data-field="cert2">Google Data Analytics Certificate</span>
+                        </div>
+                    </section>
+                </div>
             </div>
-
-          </div>
-        </section>
-      </main>
-
-      <div class="footer">
-        Two‑column CV • Right column wider for Experience • Left sections support add/remove • POR/Hobbies can be removed or added as needed • Bullets visible and clamped to max 2 lines
-      </div>
+        </div>
     </div>
-  </div>
 
-<!-- ===== TEMPLATES (for re-adding sections) ===== -->
-<template id="porSectionTemplate">
-  <div class="section" id="porSection">
-    <div class="title">
-      POSITIONS OF RESPONSIBILITY
-      <span class="small-actions">
-        <button type="button" id="btnRemovePORSection" title="Remove entire POR section">Remove Section</button>
-        <button type="button" id="btnAddPOR">Add POR</button>
-      </span>
+    <div class="controls">
+        <button id="uploadPhoto" class="control-btn">
+            <i class="fas fa-camera"></i> Upload Headshot
+        </button>
+        <button id="downloadCV" class="control-btn">
+            <i class="fas fa-download"></i> Download CV (₹499)
+        </button>
+        <button id="resetCV" class="control-btn">
+            <i class="fas fa-redo"></i> Reset
+        </button>
     </div>
-    <div class="rule"></div>
-    <ul class="bullets" id="porList">
-      <li contenteditable="true">Position / Responsibility — brief outcome</li>
-    </ul>
-    <div class="inline-controls">
-      <button type="button" id="btnRemoveLastPOR">Remove last POR</button>
-    </div>
-  </div>
-</template>
 
-<template id="hobbySectionTemplate">
-  <div class="section" id="hobbySection">
-    <div class="title">
-      HOBBIES
-      <span class="small-actions">
-        <button type="button" id="btnRemoveHobbySection" title="Remove entire Hobbies section">Remove Section</button>
-        <button type="button" id="btnAddHobby">Add Hobby</button>
-      </span>
-    </div>
-    <div class="rule"></div>
-    <ul class="bullets" id="hobbyList">
-      <li contenteditable="true">New hobby or interest</li>
-    </ul>
-    <div class="inline-controls">
-      <button type="button" id="btnRemoveLastHobby">Remove last hobby</button>
-    </div>
-  </div>
-</template>
+    <input type="file" id="photoInput" accept="image/*" style="display: none;">
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
+</html>
