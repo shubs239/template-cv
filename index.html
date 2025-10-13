@@ -12,7 +12,7 @@
     --rule: #0A66C2;
     --bg: #f6f7f9;
     --page-shadow: rgba(0,0,0,.08);
-    --gutter: 12pt;
+    --gutter: 12pt;            /* ~12–14pt */
   }
 
   html, body { height: 100%; }
@@ -24,7 +24,7 @@
   /* Toolbar */
   .toolbar{
     position: sticky; top: 0; z-index: 10;
-    display: flex; gap: 12px; align-items: center; padding: 10px 16px;
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 10px 16px;
     background: #fff; border-bottom: 1px solid #e5e7eb;
   }
   .toolbar .spacer{ flex: 1; }
@@ -41,7 +41,7 @@
     width: 210mm; height: 297mm;                 /* A4 portrait */
     background: #fff; box-shadow: 0 8px 30px var(--page-shadow);
     position: relative;
-    padding: 12mm;                                /* compact margins */
+    padding: 12mm;                                /* compact margins all around */
     box-sizing: border-box;
     page-break-inside: avoid;
   }
@@ -51,7 +51,7 @@
     .toolbar{ display: none; }
     .page{
       box-shadow: none; margin: 0;
-      height: 296mm;               /* avoid blank second page due to rounding */
+      height: 296mm;               /* tiny reduction avoids blank second page */
       overflow: hidden;
       page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;
     }
@@ -98,14 +98,14 @@
   .title + .rule{ height: 1px; background: var(--rule); margin: 6px 0 8px; }
   .text, .list, .edu-line{ font-size: 10pt; line-height: 1.28; }
 
-  /* Bulleted lists */
+  /* Bulleted lists (visible bullets; clamp each item to 2 lines) */
   .bullets{
     list-style: disc; list-style-position: outside;
     padding-left: 16pt; margin: 0;
   }
   .bullets li{
     margin: 3pt 0;
-    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; /* clamp to 2 lines */
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
   }
 
   /* Education rows */
@@ -119,7 +119,7 @@
   }
   @media print{ .edu-row .remove{ display: none; } }
 
-  /* Experience entries */
+  /* Experience entries (right column) */
   .exp-entry{ margin-bottom: 10pt; position: relative; }
   .exp-head{
     display: grid; grid-template-columns: 1.2fr .9fr .6fr .6fr; gap: 6pt; align-items: baseline;
@@ -130,8 +130,7 @@
   .exp-location{ color: #444; }
   .exp-dates{ text-align: right; color: #444; }
   .exp-bullets{
-    margin: 6pt 0 0 0; padding-left: 16pt;
-    list-style: disc; list-style-position: outside;
+    margin: 6pt 0 0 0; padding-left: 16pt; list-style: disc; list-style-position: outside;
   }
   .exp-bullets li{
     margin: 3pt 0;
@@ -166,10 +165,14 @@
       <input id="photoInput" type="file" accept="image/*" style="display:none" />
     </label>
     <button id="clearPhoto">Remove Photo</button>
+
     <button id="addExp" class="ghost">Add Experience</button>
     <button id="addBullet" class="ghost" title="Adds a bullet to the last selected experience">Add Bullet</button>
-    <!-- NEW: Add POR Section from toolbar -->
+
+    <!-- Add section toggles -->
     <button id="addPORSection" class="ghost" title="Add Positions of Responsibility section if missing">Add POR Section</button>
+    <button id="addHobbySection" class="ghost" title="Add Hobbies section if missing">Add Hobbies Section</button>
+
     <div class="spacer"></div>
     <button class="primary" onclick="window.print()">Print / Save PDF</button>
   </div>
@@ -292,6 +295,7 @@
             <div class="title">
               HOBBIES
               <span class="small-actions">
+                <button type="button" id="btnRemoveHobbySection" title="Remove entire Hobbies section">Remove Section</button>
                 <button type="button" id="btnAddHobby">Add Hobby</button>
               </span>
             </div>
@@ -373,7 +377,7 @@
       </main>
 
       <div class="footer">
-        Two‑column CV • Right column wider for Experience • Left sections support add/remove • POR can be removed or added as needed • Bullets visible and clamped to max 2 lines
+        Two‑column CV • Right column wider for Experience • Left sections support add/remove • POR/Hobbies can be removed or added as needed • Bullets visible and clamped to max 2 lines
       </div>
     </div>
   </div>
@@ -394,6 +398,25 @@
     </ul>
     <div class="inline-controls">
       <button type="button" id="btnRemoveLastPOR">Remove last POR</button>
+    </div>
+  </div>
+</template>
+
+<template id="hobbySectionTemplate">
+  <div class="section" id="hobbySection">
+    <div class="title">
+      HOBBIES
+      <span class="small-actions">
+        <button type="button" id="btnRemoveHobbySection" title="Remove entire Hobbies section">Remove Section</button>
+        <button type="button" id="btnAddHobby">Add Hobby</button>
+      </span>
+    </div>
+    <div class="rule"></div>
+    <ul class="bullets" id="hobbyList">
+      <li contenteditable="true">New hobby or interest</li>
+    </ul>
+    <div class="inline-controls">
+      <button type="button" id="btnRemoveLastHobby">Remove last hobby</button>
     </div>
   </div>
 </template>
@@ -452,13 +475,13 @@
   });
 
   function wireExpEntryControls(root){
-    const el = root.querySelector ? root : document;
-    el.querySelectorAll('.btnAddBullet').forEach(btn => {
+    const scope = root.querySelector ? root : document;
+    scope.querySelectorAll('.btnAddBullet').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const entry = e.target.closest('.exp-entry'); addBulletTo(entry);
       });
     });
-    el.querySelectorAll('.btnRemoveEntry').forEach(btn => {
+    scope.querySelectorAll('.btnRemoveEntry').forEach(btn => {
       btn.addEventListener('click', (e) => e.target.closest('.exp-entry').remove());
     });
   }
@@ -470,11 +493,11 @@
     const li = document.createElement('li');
     li.setAttribute('contenteditable', 'true');
     li.textContent = 'Short impact statement…';
-    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); }); // keep clamp tidy
     ul.appendChild(li); placeCaretAtEnd(li);
   }
 
-  // Prevent Enter from creating extra <br> lines in existing bullets
+  // Clamp-friendly: prevent Enter in existing bullets
   document.querySelectorAll('.exp-bullets li[contenteditable="true"]').forEach(li => {
     li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
   });
@@ -506,10 +529,9 @@
       <div class="muted" contenteditable="true">MM/YYYY – MM/YYYY</div>
       <button type="button" class="remove" title="Remove">Remove</button>`;
     row.querySelector('.remove').addEventListener('click', () => row.remove());
-    eduList.appendChild(row);
-    row.querySelector('div[contenteditable]').focus();
+    eduList.appendChild(row); row.querySelector('div[contenteditable]').focus();
   });
-  // wire existing remove
+  // Wire existing Remove buttons
   eduList.querySelectorAll('.edu-row .remove').forEach(btn => btn.addEventListener('click', (e) => e.target.closest('.edu-row').remove()));
 
   // Certifications
@@ -527,14 +549,13 @@
     li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
   });
 
-  // ===== POR (remove or add entire section) =====
+  // ===== POR section (remove or add entire section) =====
   const leftColumn = document.getElementById('leftColumn');
   const addPORSectionBtn = document.getElementById('addPORSection');
   const porTemplate = document.getElementById('porSectionTemplate');
 
-  // Wire POR section controls (works for existing and newly added sections)
   function wirePORSection(root){
-    const scope = root.querySelector ? root : document;   // accept document or fragment
+    const scope = root.querySelector ? root : document;
     const addBtn = scope.querySelector('#btnAddPOR');
     const removeLastBtn = scope.querySelector('#btnRemoveLastPOR');
     const removeSectionBtn = scope.querySelector('#btnRemovePORSection');
@@ -557,44 +578,70 @@
       if (section) section.remove();
     });
 
-    // Prevent newline in existing bullets
     if (porList) porList.querySelectorAll('li[contenteditable="true"]').forEach(li => {
       li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
     });
   }
-
-  // Wire the initial POR section on page
-  const initialPOR = document.getElementById('porSection');
-  if (initialPOR) wirePORSection(document);
+  // Wire initial POR section if present
+  if (document.getElementById('porSection')) wirePORSection(document);
 
   // Toolbar: Add POR Section if missing
   addPORSectionBtn.addEventListener('click', () => {
     if (document.getElementById('porSection')) return; // already present
     const frag = document.importNode(porTemplate.content, true);
-    // Insert POR above Hobbies (or at end of left column if hobbies not found)
+    // Insert POR above Hobbies (or at end of left column)
     const hobbies = document.getElementById('hobbySection');
     leftColumn.insertBefore(frag, hobbies ? hobbies : null);
-    // Wire controls for the newly added section
     wirePORSection(document);
   });
 
-  // Hobbies
-  const hobbyList = document.getElementById('hobbyList');
-  document.getElementById('btnAddHobby').addEventListener('click', () => {
-    const li = document.createElement('li');
-    li.setAttribute('contenteditable', 'true'); li.textContent = 'New hobby or interest';
-    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
-    hobbyList.appendChild(li); placeCaretAtEnd(li);
-  });
-  document.getElementById('btnRemoveLastHobby').addEventListener('click', () => {
-    const items = hobbyList.querySelectorAll('li'); if (items.length) items[items.length - 1].remove();
+  // ===== Hobbies section (remove or add entire section) =====
+  const addHobbySectionBtn = document.getElementById('addHobbySection');
+  const hobbyTemplate = document.getElementById('hobbySectionTemplate');
+
+  function wireHobbySection(root) {
+    const scope = root.querySelector ? root : document;
+    const addBtn = scope.querySelector('#btnAddHobby');
+    const removeLastBtn = scope.querySelector('#btnRemoveLastHobby');
+    const removeSectionBtn = scope.querySelector('#btnRemoveHobbySection');
+    const hobbyList = scope.querySelector('#hobbyList');
+
+    if (addBtn) addBtn.addEventListener('click', () => {
+      const li = document.createElement('li');
+      li.setAttribute('contenteditable','true');
+      li.textContent = 'New hobby or interest';
+      li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+      hobbyList.appendChild(li); placeCaretAtEnd(li);
+    });
+
+    if (removeLastBtn) removeLastBtn.addEventListener('click', () => {
+      const items = hobbyList.querySelectorAll('li'); if (items.length) items[items.length - 1].remove();
+    });
+
+    if (removeSectionBtn) removeSectionBtn.addEventListener('click', () => {
+      const section = removeSectionBtn.closest('#hobbySection');
+      if (section) section.remove();
+    });
+
+    if (hobbyList) hobbyList.querySelectorAll('li[contenteditable="true"]').forEach(li => {
+      li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    });
+  }
+  // Wire initial Hobbies section if present
+  if (document.getElementById('hobbySection')) wireHobbySection(document);
+
+  // Toolbar: Add Hobbies Section if missing
+  addHobbySectionBtn.addEventListener('click', () => {
+    if (document.getElementById('hobbySection')) return; // already present
+    const frag = document.importNode(hobbyTemplate.content, true);
+    leftColumn.appendChild(frag); // add to end of left column
+    wireHobbySection(document);
   });
 
-  // Utility
+  // ==== Utility ====
   function placeCaretAtEnd(el) {
     const range = document.createRange(); range.selectNodeContents(el); range.collapse(false);
     const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
   }
 </script>
 </body>
-</html>
