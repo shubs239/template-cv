@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CV – Two-Column (A4, HTML Preview)</title>
+<style>
+  :root{
+    --accent: #0A66C2;         /* LinkedIn blue */
+    --text: #262626;
+    --muted: #8a8a8a;
+    --rule: #0A66C2;
+    --bg: #f6f7f9;
+    --page-shadow: rgba(0,0,0,.08);
+    --gutter: 12pt;
+  }
+
+  html, body { height: 100%; }
+  body{
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  }
+
+  /* Toolbar */
+  .toolbar{
+    position: sticky; top: 0; z-index: 10;
+    display: flex; gap: 12px; align-items: center; padding: 10px 16px;
+    background: #fff; border-bottom: 1px solid #e5e7eb;
+  }
+  .toolbar .spacer{ flex: 1; }
+  .toolbar button, .toolbar label{
+    border: 1px solid #d1d5db; background: #fff; color: #111827; cursor: pointer;
+    padding: 8px 12px; border-radius: 6px; font-size: 14px;
+  }
+  .toolbar button.primary{ background: var(--accent); color: #fff; border-color: var(--accent); }
+  .toolbar .ghost{ background: #fff; color: #111827; }
+
+  /* Page */
+  .wrap{ display: grid; place-items: start center; padding: 24px; }
+  .page{
+    width: 210mm; height: 297mm;                 /* A4 portrait */
+    background: #fff; box-shadow: 0 8px 30px var(--page-shadow);
+    position: relative;
+    padding: 12mm;                                /* compact margins */
+    box-sizing: border-box;
+    page-break-inside: avoid;
+  }
+  @page { size: A4; margin: 0; }
+  @media print{
+    body{ background: #fff; }
+    .toolbar{ display: none; }
+    .page{
+      box-shadow: none; margin: 0;
+      height: 296mm;               /* avoid blank second page due to rounding */
+      overflow: hidden;
+      page-break-inside: avoid; break-inside: avoid; page-break-after: avoid;
+    }
+    *{-webkit-print-color-adjust: exact; print-color-adjust: exact;}
+  }
+
+  /* Header */
+  .header{ display: flex; align-items: center; gap: 12px; min-height: 34mm; }
+  .photo{
+    width: 38mm; height: 38mm; border-radius: 50%;
+    background: #e9eef6; color: #5b6b7f; display: grid; place-items: center;
+    font-weight: 700; font-size: 18pt; overflow: hidden; flex: 0 0 auto;
+    border: 1px solid #dfe6f2;
+  }
+  .photo img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .heading{ display: flex; flex-direction: column; gap: 6px; min-width: 40mm; }
+  .name{ font-size: 22pt; font-weight: 700; letter-spacing: 0.2px; }
+  .role{ font-size: 12.5pt; font-weight: 500; color: #333; }
+  .contact{
+    margin-left: auto; text-align: right; font-size: 9.5pt; color: #333;
+    max-width: 80mm; line-height: 1.35;
+  }
+  .divider{ margin-top: 8px; height: 1px; background: var(--rule); }
+
+  /* Two-column grid: left 38%, right 62% */
+  .columns{
+    margin-top: 10pt;
+    display: grid; grid-template-columns: 38% 62%; column-gap: var(--gutter);
+  }
+
+  /* Sections */
+  .section{ margin-bottom: 12pt; }
+  .section .title{
+    font-size: 11.5pt; color: var(--accent); font-weight: 700; letter-spacing: 1px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  .title .small-actions{ display: flex; gap: 6px; }
+  .title .small-actions button{
+    font-size: 10px; padding: 3px 6px; border: 1px solid #d1d5db;
+    border-radius: 4px; background: #fff; cursor: pointer;
+  }
+  @media print{ .title .small-actions{ display: none; } }
+
+  .title + .rule{ height: 1px; background: var(--rule); margin: 6px 0 8px; }
+  .text, .list, .edu-line{ font-size: 10pt; line-height: 1.28; }
+
+  /* Bulleted lists */
+  .bullets{
+    list-style: disc; list-style-position: outside;
+    padding-left: 16pt; margin: 0;
+  }
+  .bullets li{
+    margin: 3pt 0;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; /* clamp to 2 lines */
+  }
+
+  /* Education rows */
+  .edu-list{ display: grid; gap: 6pt; }
+  .edu-row{
+    display: grid; grid-template-columns: 1fr .8fr .6fr auto; gap: 6pt; align-items: center;
+  }
+  .edu-row .muted{ color: var(--muted); }
+  .edu-row .remove{
+    font-size: 10px; padding: 2px 6px; border: 1px solid #d1d5db; border-radius: 4px; background: #fff; cursor: pointer;
+  }
+  @media print{ .edu-row .remove{ display: none; } }
+
+  /* Experience entries */
+  .exp-entry{ margin-bottom: 10pt; position: relative; }
+  .exp-head{
+    display: grid; grid-template-columns: 1.2fr .9fr .6fr .6fr; gap: 6pt; align-items: baseline;
+    font-size: 9.5pt;
+  }
+  .exp-title{ font-weight: 600; }
+  .exp-company{ color: #333; }
+  .exp-location{ color: #444; }
+  .exp-dates{ text-align: right; color: #444; }
+  .exp-bullets{
+    margin: 6pt 0 0 0; padding-left: 16pt;
+    list-style: disc; list-style-position: outside;
+  }
+  .exp-bullets li{
+    margin: 3pt 0;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  }
+
+  /* Inline controls (non-print) */
+  .inline-controls{ margin-top: 6px; display: flex; gap: 8px; }
+  .inline-controls button{
+    font-size: 11px; padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; background: #fff; cursor: pointer;
+  }
+  @media print{ .inline-controls{ display: none; } }
+
+  /* Footer hint */
+  .footer{
+    position: absolute; left: 12mm; right: 12mm; bottom: 10mm;
+    color: #9aa3ad; font-size: 8pt; border-top: 1px solid #e5e7eb; padding-top: 6px;
+  }
+
+  /* ContentEditable focus */
+  [contenteditable="true"]:focus{
+    outline: 2px dashed rgba(10,102,194,.35); outline-offset: 2px; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <label>
+      Upload Photo
+      <input id="photoInput" type="file" accept="image/*" style="display:none" />
+    </label>
+    <button id="clearPhoto">Remove Photo</button>
+    <button id="addExp" class="ghost">Add Experience</button>
+    <button id="addBullet" class="ghost" title="Adds a bullet to the last selected experience">Add Bullet</button>
+    <!-- NEW: Add POR Section from toolbar -->
+    <button id="addPORSection" class="ghost" title="Add Positions of Responsibility section if missing">Add POR Section</button>
+    <div class="spacer"></div>
+    <button class="primary" onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <div class="wrap">
+    <div class="page" id="a4">
+
+      <!-- Header -->
+      <header class="header">
+        <div class="photo" id="photoSlot" aria-label="Headshot">
+          <span id="monogram">SS</span>
+          <img id="headshot" alt="Headshot" style="display:none;" />
+        </div>
+
+        <div class="heading">
+          <div class="name" contenteditable="true" data-field="full_name">Shubham Singh</div>
+          <div class="role" contenteditable="true" data-field="job_title">Product Manager</div>
+        </div>
+
+        <div class="contact" contenteditable="true" data-field="contact_line" title="Use | as separator">
+          shubham@example.com | +91&nbsp;98765&nbsp;43210 | Pune, IN | linkedin.com/in/shubhamsingh
+        </div>
+      </header>
+      <div class="divider"></div>
+
+      <!-- Columns -->
+      <main class="columns">
+
+        <!-- LEFT: Sidebar (38%) -->
+        <section id="leftColumn">
+
+          <!-- Summary -->
+          <div class="section">
+            <div class="title">SUMMARY / PROFILE</div>
+            <div class="rule"></div>
+            <div class="text" contenteditable="true" data-field="summary">
+              Product leader with 7+ years building data-driven consumer products. Led cross-functional teams to launch eco-friendly devices; shipped 3 products reaching 1M+ users.
+            </div>
+          </div>
+
+          <!-- Skills (bulleted) -->
+          <div class="section" id="skillsSection">
+            <div class="title">
+              SKILLS
+              <span class="small-actions">
+                <button type="button" id="btnAddSkill">Add Skill</button>
+              </span>
+            </div>
+            <div class="rule"></div>
+            <ul class="bullets" id="skillsList">
+              <li contenteditable="true">Product Strategy</li>
+              <li contenteditable="true">Roadmapping</li>
+              <li contenteditable="true">SQL</li>
+              <li contenteditable="true">A/B Testing</li>
+              <li contenteditable="true">Python</li>
+              <li contenteditable="true">Power BI</li>
+            </ul>
+            <div class="inline-controls">
+              <button type="button" id="btnRemoveLastSkill">Remove last skill</button>
+            </div>
+          </div>
+
+          <!-- Education (multiple rows) -->
+          <div class="section" id="educationSection">
+            <div class="title">
+              EDUCATION
+              <span class="small-actions">
+                <button type="button" id="btnAddEdu">Add Education</button>
+              </span>
+            </div>
+            <div class="rule"></div>
+            <div class="edu-list" id="eduList">
+              <div class="edu-row">
+                <div contenteditable="true">IIT (Example)</div>
+                <div contenteditable="true">B.Tech, Mechanical</div>
+                <div class="muted" contenteditable="true">08/2016 – 05/2020</div>
+                <button type="button" class="remove" title="Remove">Remove</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certifications (bulleted) -->
+          <div class="section" id="certsSection">
+            <div class="title">
+              CERTIFICATIONS
+              <span class="small-actions">
+                <button type="button" id="btnAddCert">Add Certification</button>
+              </span>
+            </div>
+            <div class="rule"></div>
+            <ul class="bullets" id="certsList">
+              <li contenteditable="true">Pragmatic PMC Level I (09/2023)</li>
+              <li contenteditable="true">Best Product Launch – Eco Awards (2024)</li>
+            </ul>
+            <div class="inline-controls">
+              <button type="button" id="btnRemoveLastCert">Remove last certification</button>
+            </div>
+          </div>
+
+          <!-- PORs (Positions of Responsibility) -->
+          <div class="section" id="porSection">
+            <div class="title">
+              POSITIONS OF RESPONSIBILITY
+              <span class="small-actions">
+                <button type="button" id="btnRemovePORSection" title="Remove entire POR section">Remove Section</button>
+                <button type="button" id="btnAddPOR">Add POR</button>
+              </span>
+            </div>
+            <div class="rule"></div>
+            <ul class="bullets" id="porList">
+              <li contenteditable="true">Placement Committee Member – Coordinated 15+ company drives (2019–2020)</li>
+            </ul>
+            <div class="inline-controls">
+              <button type="button" id="btnRemoveLastPOR">Remove last POR</button>
+            </div>
+          </div>
+
+          <!-- Hobbies -->
+          <div class="section" id="hobbySection">
+            <div class="title">
+              HOBBIES
+              <span class="small-actions">
+                <button type="button" id="btnAddHobby">Add Hobby</button>
+              </span>
+            </div>
+            <div class="rule"></div>
+            <ul class="bullets" id="hobbyList">
+              <li contenteditable="true">Trail running (10k), photography, chess (~1600 ELO blitz)</li>
+            </ul>
+            <div class="inline-controls">
+              <button type="button" id="btnRemoveLastHobby">Remove last hobby</button>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- RIGHT: Experience / Projects (62%) -->
+        <section id="experienceSection">
+          <div class="section">
+            <div class="title">EXPERIENCE / PROJECTS</div>
+            <div class="rule"></div>
+
+            <!-- TEMPLATE for experience entry -->
+            <template id="expTemplate">
+              <div class="exp-entry" data-repeat="experience" tabindex="0">
+                <div class="exp-head">
+                  <div class="exp-title" contenteditable="true">Job Title</div>
+                  <div class="exp-company" contenteditable="true">Company</div>
+                  <div class="exp-location" contenteditable="true">City</div>
+                  <div class="exp-dates" contenteditable="true">MM/YYYY – MM/YYYY</div>
+                </div>
+                <ul class="exp-bullets">
+                  <li contenteditable="true">Impact statement with a metric and action result.</li>
+                </ul>
+                <div class="inline-controls">
+                  <button type="button" class="btnAddBullet">Add bullet</button>
+                  <button type="button" class="btnRemoveEntry">Remove entry</button>
+                </div>
+              </div>
+            </template>
+
+            <!-- Entry 1 -->
+            <div class="exp-entry" data-repeat="experience" tabindex="0">
+              <div class="exp-head">
+                <div class="exp-title" contenteditable="true" data-field="exp_1_title">Product Manager</div>
+                <div class="exp-company" contenteditable="true" data-field="exp_1_company">EcoShop</div>
+                <div class="exp-location" contenteditable="true" data-field="exp_1_location">Pune</div>
+                <div class="exp-dates" contenteditable="true" data-field="exp_1_dates">03/2023 – Present</div>
+              </div>
+              <ul class="exp-bullets">
+                <li contenteditable="true" data-field="exp_1_b1">Drove GTM for eco-friendly kitchen appliance; achieved ₹3.2Cr ARR in 9 months.</li>
+                <li contenteditable="true" data-field="exp_1_b2">Built pricing model; improved contribution margin by 12pp.</li>
+                <li contenteditable="true" data-field="exp_1_b3">Led AI personalization POC; increased CVR by 18%.</li>
+              </ul>
+              <div class="inline-controls">
+                <button type="button" class="btnAddBullet">Add bullet</button>
+                <button type="button" class="btnRemoveEntry">Remove entry</button>
+              </div>
+            </div>
+
+            <!-- Entry 2 -->
+            <div class="exp-entry" data-repeat="experience" tabindex="0">
+              <div class="exp-head">
+                <div class="exp-title" contenteditable="true" data-field="exp_2_title">Associate PM</div>
+                <div class="exp-company" contenteditable="true" data-field="exp_2_company">GreenTech</div>
+                <div class="exp-location" contenteditable="true" data-field="exp_2_location">Bengaluru</div>
+                <div class="exp-dates" contenteditable="true" data-field="exp_2_dates">08/2020 – 02/2023</div>
+              </div>
+              <ul class="exp-bullets">
+                <li contenteditable="true" data-field="exp_2_b1">Prioritized roadmap using ICE; reduced churn by 4%.</li>
+                <li contenteditable="true" data-field="exp_2_b2">Shipped analytics dashboard; +25% DAU engagement.</li>
+              </ul>
+              <div class="inline-controls">
+                <button type="button" class="btnAddBullet">Add bullet</button>
+                <button type="button" class="btnRemoveEntry">Remove entry</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </main>
+
+      <div class="footer">
+        Two‑column CV • Right column wider for Experience • Left sections support add/remove • POR can be removed or added as needed • Bullets visible and clamped to max 2 lines
+      </div>
+    </div>
+  </div>
+
+<!-- ===== TEMPLATES (for re-adding sections) ===== -->
+<template id="porSectionTemplate">
+  <div class="section" id="porSection">
+    <div class="title">
+      POSITIONS OF RESPONSIBILITY
+      <span class="small-actions">
+        <button type="button" id="btnRemovePORSection" title="Remove entire POR section">Remove Section</button>
+        <button type="button" id="btnAddPOR">Add POR</button>
+      </span>
+    </div>
+    <div class="rule"></div>
+    <ul class="bullets" id="porList">
+      <li contenteditable="true">Position / Responsibility — brief outcome</li>
+    </ul>
+    <div class="inline-controls">
+      <button type="button" id="btnRemoveLastPOR">Remove last POR</button>
+    </div>
+  </div>
+</template>
+
+<script>
+  // ===== Photo upload preview =====
+  const input = document.getElementById('photoInput');
+  const clearBtn = document.getElementById('clearPhoto');
+  const img = document.getElementById('headshot');
+  const mono = document.getElementById('monogram');
+  const nameEl = document.querySelector('[data-field="full_name"]');
+
+  input.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => { img.src = reader.result; img.style.display = 'block'; mono.style.display = 'none'; };
+    reader.readAsDataURL(file);
+  });
+  clearBtn.addEventListener('click', () => {
+    img.removeAttribute('src'); img.style.display = 'none'; mono.style.display = 'grid'; input.value = '';
+  });
+  const updateMonogram = () => {
+    const text = (nameEl.textContent || '').trim();
+    const initials = text.split(/\s+/).slice(0,2).map(s => s[0] || '').join('').toUpperCase();
+    mono.textContent = initials || 'AA';
+  };
+  nameEl.addEventListener('input', updateMonogram); updateMonogram();
+
+  // ===== Experience: add/remove entries and bullets (Right column) =====
+  const expSection = document.getElementById('experienceSection');
+  const addExpBtn = document.getElementById('addExp');
+  const addBulletToolbarBtn = document.getElementById('addBullet');
+  const expTemplate = document.getElementById('expTemplate');
+  let lastFocusedEntry = null;
+
+  expSection.addEventListener('click', (e) => {
+    const entry = e.target.closest('.exp-entry'); if (entry) lastFocusedEntry = entry;
+  });
+  expSection.addEventListener('focusin', (e) => {
+    const entry = e.target.closest('.exp-entry'); if (entry) lastFocusedEntry = entry;
+  });
+
+  addExpBtn.addEventListener('click', () => {
+    const clone = document.importNode(expTemplate.content, true);
+    wireExpEntryControls(clone);
+    expSection.querySelector('.section').appendChild(clone);
+  });
+
+  addBulletToolbarBtn.addEventListener('click', () => {
+    if (!lastFocusedEntry) {
+      const entries = expSection.querySelectorAll('.exp-entry');
+      lastFocusedEntry = entries[entries.length - 1];
+    }
+    if (lastFocusedEntry) addBulletTo(lastFocusedEntry);
+  });
+
+  function wireExpEntryControls(root){
+    const el = root.querySelector ? root : document;
+    el.querySelectorAll('.btnAddBullet').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const entry = e.target.closest('.exp-entry'); addBulletTo(entry);
+      });
+    });
+    el.querySelectorAll('.btnRemoveEntry').forEach(btn => {
+      btn.addEventListener('click', (e) => e.target.closest('.exp-entry').remove());
+    });
+  }
+  wireExpEntryControls(document);
+
+  function addBulletTo(entry){
+    if (!entry) return;
+    const ul = entry.querySelector('.exp-bullets');
+    const li = document.createElement('li');
+    li.setAttribute('contenteditable', 'true');
+    li.textContent = 'Short impact statement…';
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    ul.appendChild(li); placeCaretAtEnd(li);
+  }
+
+  // Prevent Enter from creating extra <br> lines in existing bullets
+  document.querySelectorAll('.exp-bullets li[contenteditable="true"]').forEach(li => {
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+  });
+
+  // ===== Left column: Skills, Education, Certifications, PORs, Hobbies =====
+
+  // Skills
+  const skillsList = document.getElementById('skillsList');
+  document.getElementById('btnAddSkill').addEventListener('click', () => {
+    const li = document.createElement('li');
+    li.setAttribute('contenteditable', 'true'); li.textContent = 'New skill';
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    skillsList.appendChild(li); placeCaretAtEnd(li);
+  });
+  document.getElementById('btnRemoveLastSkill').addEventListener('click', () => {
+    const items = skillsList.querySelectorAll('li'); if (items.length) items[items.length - 1].remove();
+  });
+  skillsList.querySelectorAll('li').forEach(li => {
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+  });
+
+  // Education
+  const eduList = document.getElementById('eduList');
+  document.getElementById('btnAddEdu').addEventListener('click', () => {
+    const row = document.createElement('div'); row.className = 'edu-row';
+    row.innerHTML = `
+      <div contenteditable="true">College / University</div>
+      <div contenteditable="true">Degree / Major</div>
+      <div class="muted" contenteditable="true">MM/YYYY – MM/YYYY</div>
+      <button type="button" class="remove" title="Remove">Remove</button>`;
+    row.querySelector('.remove').addEventListener('click', () => row.remove());
+    eduList.appendChild(row);
+    row.querySelector('div[contenteditable]').focus();
+  });
+  // wire existing remove
+  eduList.querySelectorAll('.edu-row .remove').forEach(btn => btn.addEventListener('click', (e) => e.target.closest('.edu-row').remove()));
+
+  // Certifications
+  const certsList = document.getElementById('certsList');
+  document.getElementById('btnAddCert').addEventListener('click', () => {
+    const li = document.createElement('li');
+    li.setAttribute('contenteditable', 'true'); li.textContent = 'Certification — Issuer (MM/YYYY)';
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    certsList.appendChild(li); placeCaretAtEnd(li);
+  });
+  document.getElementById('btnRemoveLastCert').addEventListener('click', () => {
+    const items = certsList.querySelectorAll('li'); if (items.length) items[items.length - 1].remove();
+  });
+  certsList.querySelectorAll('li').forEach(li => {
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+  });
+
+  // ===== POR (remove or add entire section) =====
+  const leftColumn = document.getElementById('leftColumn');
+  const addPORSectionBtn = document.getElementById('addPORSection');
+  const porTemplate = document.getElementById('porSectionTemplate');
+
+  // Wire POR section controls (works for existing and newly added sections)
+  function wirePORSection(root){
+    const scope = root.querySelector ? root : document;   // accept document or fragment
+    const addBtn = scope.querySelector('#btnAddPOR');
+    const removeLastBtn = scope.querySelector('#btnRemoveLastPOR');
+    const removeSectionBtn = scope.querySelector('#btnRemovePORSection');
+    const porList = scope.querySelector('#porList');
+
+    if (addBtn) addBtn.addEventListener('click', () => {
+      const li = document.createElement('li');
+      li.setAttribute('contenteditable','true');
+      li.textContent = 'Position / Responsibility — brief outcome';
+      li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+      porList.appendChild(li); placeCaretAtEnd(li);
+    });
+
+    if (removeLastBtn) removeLastBtn.addEventListener('click', () => {
+      const items = porList.querySelectorAll('li'); if (items.length) items[items.length - 1].remove();
+    });
+
+    if (removeSectionBtn) removeSectionBtn.addEventListener('click', () => {
+      const section = removeSectionBtn.closest('#porSection');
+      if (section) section.remove();
+    });
+
+    // Prevent newline in existing bullets
+    if (porList) porList.querySelectorAll('li[contenteditable="true"]').forEach(li => {
+      li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    });
+  }
+
+  // Wire the initial POR section on page
+  const initialPOR = document.getElementById('porSection');
+  if (initialPOR) wirePORSection(document);
+
+  // Toolbar: Add POR Section if missing
+  addPORSectionBtn.addEventListener('click', () => {
+    if (document.getElementById('porSection')) return; // already present
+    const frag = document.importNode(porTemplate.content, true);
+    // Insert POR above Hobbies (or at end of left column if hobbies not found)
+    const hobbies = document.getElementById('hobbySection');
+    leftColumn.insertBefore(frag, hobbies ? hobbies : null);
+    // Wire controls for the newly added section
+    wirePORSection(document);
+  });
+
+  // Hobbies
+  const hobbyList = document.getElementById('hobbyList');
+  document.getElementById('btnAddHobby').addEventListener('click', () => {
+    const li = document.createElement('li');
+    li.setAttribute('contenteditable', 'true'); li.textContent = 'New hobby or interest';
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    hobbyList.appendChild(li); placeCaretAtEnd(li);
+  });
+  document.getElementById('btnRemoveLastHobby').addEventListener('click', () => {
+    const items = hobbyList.querySelectorAll('li'); if (items.length) items[items.length - 1].remove();
+  });
+
+  // Utility
+  function placeCaretAtEnd(el) {
+    const range = document.createRange(); range.selectNodeContents(el); range.collapse(false);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+  }
+</script>
+</body>
+</html>
