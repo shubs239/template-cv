@@ -27,7 +27,7 @@ body {
 
 /* Top 30% Image Section */
 .image-section {
-    height: 30%;
+    height: 92px;
     min-height: 90mm;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     position: relative;
