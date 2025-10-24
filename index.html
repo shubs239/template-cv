@@ -4,287 +4,336 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CVPro | Create Professional CVs in Minutes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/script.js"></script>
-
+    <!-- Bootstrap JS (Optional for dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header class="bg-white shadow-sm">
         <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <i class="fas fa-file-alt"></i>
-                    CVPro
+            <nav class="navbar navbar-expand-lg">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <i class="fas fa-file-alt me-2 text-primary"></i>
+                    <span class="fw-bold">CVPro</span>
                 </a>
-                <ul class="nav-links">
-                    <li><a href="#templates">Templates</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <!-- <li><a href="#" class="btn btn-secondary">Sign In</a></li> -->
-                </ul>
-                <div class="mobile-menu">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a href="#templates" class="nav-link">Templates</a></li>
+                        <li class="nav-item"><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                        <li class="nav-item"><a href="#pricing" class="nav-link">Pricing</a></li>
+                        <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                        <!-- <li class="nav-item"><a href="#" class="nav-link btn btn-outline-primary btn-sm">Sign In</a></li> -->
+                    </ul>
                 </div>
             </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero bg-light py-5">
         <div class="container">
-            <h1>Create a Professional CV That Wins Interviews</h1>
-            <p>Build a job-winning CV in minutes with our AI-powered builder. Professional templates, expert suggestions, and easy customization.</p>
-            <div class="hero-btns">
-                <a href="#pricing" class="btn">Create My CV</a>
-                <a href="#templates" class="btn btn-secondary">View Template</a>
-            </div>
-            <div class="trust-badges">
-                <div class="badge">
-                    <i class="fas fa-check-circle"></i>
-                    <span>10,000+ Resumes Created</span>
+            <div class="row align-items-center">
+                <div class="col-12 mb-4 mb-md-0">
+                    <h1 class="display-5 fw-bold">Create a Professional CV That Wins Interviews</h1>
+                    <p class="lead mt-3">Build a job-winning CV in minutes with our AI-powered builder. Professional templates, expert suggestions, and easy customization.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+                        <a href="/template_form.html" class="btn btn-primary btn-lg">Create My CV</a>
+                        <a href="#templates" class="btn btn-outline-primary btn-lg">View Template</a>
+                    </div>
+                 <div class="trust-badges d-flex flex-wrap gap-3 mt-4">
+                    <div class="badge bg-white p-3 rounded d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span class="text-dark">10,000+ Resumes Created</span>
+                    </div>
+                    <div class="badge bg-white p-3 rounded d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span class="text-dark">98% Customer Satisfaction</span>
+                    </div>
+                    <div class="badge bg-white p-3 rounded d-flex align-items-center">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <span class="text-dark">AI-Powered Headshots</span>
+                    </div>
                 </div>
-                <div class="badge">
-                    <i class="fas fa-check-circle"></i>
-                    <span>98% Customer Satisfaction</span>
                 </div>
-                <div class="badge">
-                    <i class="fas fa-check-circle"></i>
-                    <span>AI-Powered Headshots</span>
-                </div>
+                <!-- <div class="col-md-6">
+                    <img src="/images/image.png" alt="CV Pro Hero" class="img-fluid rounded shadow">
+                </div> -->
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section class="features py-5 bg-white">
         <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CVPro?</h2>
-                <p>Our powerful features help you create a CV that stands out from the competition</p>
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">Why Choose CVPro?</h2>
+                <p class="text-muted">Our powerful features help you create a CV that stands out from the competition</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-robot fs-3"></i>
+                            </div>
+                            <h3 class="h5">AI Headshot Enhancement</h3>
+                            <p class="mt-3">Transform your casual photos into professional headshots using our advanced AI technology.</p>
+                        </div>
                     </div>
-                    <h3>AI Headshot Enhancement</h3>
-                    <p>Transform your casual photos into professional headshots using our advanced AI technology.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-alt"></i>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-file-alt fs-3"></i>
+                            </div>
+                            <h3 class="h5">Professional Templates</h3>
+                            <p class="mt-3">Choose from our ATS-friendly template designed by career experts.</p>
+                        </div>
                     </div>
-                    <h3>Professional Templates</h3>
-                    <p>Choose from our ATS-friendly template designed by career experts.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-magic"></i>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-magic fs-3"></i>
+                            </div>
+                            <h3 class="h5">Easy Customization</h3>
+                            <p class="mt-3">Simple interface makes it easy to create the perfect CV in minutes.</p>
+                        </div>
                     </div>
-                    <h3>Easy Customization</h3>
-                    <p>Simple interface makes it easy to create the perfect CV in minutes.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works Section -->
-    <section class="how-it-works" id="how-it-works">
+    <section class="how-it-works py-5 bg-light" id="how-it-works">
         <div class="container">
-            <div class="section-title">
-                <h2>How It Works</h2>
-                <p>Create your professional CV in just three simple steps</p>
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">How It Works</h2>
+                <p class="text-muted">Create your professional CV in just three simple steps</p>
             </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-image">
-                        <img src="/images/fillindetails.jpg" alt="Fill Details">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 text-center">
+                        <img src="/images/fillindetails.jpg" class="card-img-top" alt="Fill Details">
+                        <div class="card-body">
+                            <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">1</div>
+                            <h3 class="h5">Fill Your Details</h3>
+                            <p class="mt-3">Enter your education, experience, skills, and upload a photo</p>
+                        </div>
                     </div>
-                    <div class="step-number">1</div>
-                    <h3>Fill Your Details</h3>
-                    <p>Enter your education, experience, skills, and upload a photo</p>
                 </div>
-                <div class="step">
-                    <div class="step-image">
-                        <img src="/images/ai_headshot.jpg" alt="AI Enhancement">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 text-center">
+                        <img src="/images/ai_headshot.jpg" class="card-img-top" alt="AI Enhancement">
+                        <div class="card-body">
+                            <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">2</div>
+                            <h3 class="h5">AI Enhancement</h3>
+                            <p class="mt-3">Our AI transforms your photo into a professional headshot and optimizes your content</p>
+                        </div>
                     </div>
-                    <div class="step-number">2</div>
-                    <h3>AI Enhancement</h3>
-                    <p>Our AI transforms your photo into a professional headshot and optimizes your content</p>
                 </div>
-                <div class="step">
-                    <div class="step-image">
-                        <img src="/images/download_cv.jpg" alt="Download CV">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 text-center">
+                        <img src="/images/download_cv.jpg" class="card-img-top" alt="Download CV">
+                        <div class="card-body">
+                            <div class="step-number bg-primary text-white rounded-circle mx-auto mb-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">3</div>
+                            <h3 class="h5">Download & Impress</h3>
+                            <p class="mt-3">Pay securely and download your professionally designed CV</p>
+                        </div>
                     </div>
-                    <div class="step-number">3</div>
-                    <h3>Download & Impress</h3>
-                    <p>Pay securely and download your professionally designed CV</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Templates Section -->
-<section class="templates" id="templates">
-    <div class="container">
-        <div class="section-title">
-            <h2>Professional Template</h2>
-            <p>Our modern, professional CV template designed to impress employers</p>
-        </div>
-        <div class="templates-container">
-            <div class="template-card">
-                <div class="template-preview">
-                    <div class="template-img">
-                        <!-- Replace with your actual image path -->
-                        <img src="/images/templatecv_image.jpeg" alt="CV Template Preview">
+    <section class="templates py-5 bg-white" id="templates">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">Professional Template</h2>
+                <p class="text-muted">Our modern, professional CV template designed to impress employers</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="/images/templatecv_image.jpeg" class="card-img-top" alt="CV Template Preview">
                     </div>
                 </div>
-                <div class="template-benefits">
-                    <h3>Modern Professional Template</h3>
-                    <div class="benefits-list">
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-building"></i>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="h4">Modern Professional Template</h3>
+                            <div class="benefits-list mt-4">
+                                <div class="benefit-item d-flex mb-3">
+                                    <div class="benefit-icon bg-primary text-white rounded-circle me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h4 class="h6">Trusted by 500+ Companies</h4>
+                                        <p class="mb-0">Recruiters from top companies prefer this professional format</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item d-flex mb-3">
+                                    <div class="benefit-icon bg-primary text-white rounded-circle me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h4 class="h6">Effortless Professional Look</h4>
+                                        <p class="mb-0">Showcase your professional side without design skills</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item d-flex mb-3">
+                                    <div class="benefit-icon bg-primary text-white rounded-circle me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h4 class="h6">ATS Friendly</h4>
+                                        <p class="mb-0">Optimized for Applicant Tracking Systems used by 99% of Fortune 500</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item d-flex mb-3">
+                                    <div class="benefit-icon bg-primary text-white rounded-circle me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h4 class="h6">Fully Responsive</h4>
+                                        <p class="mb-0">Looks perfect on all devices - desktop, tablet, and mobile</p>
+                                    </div>
+                                </div>
+                                <div class="benefit-item d-flex">
+                                    <div class="benefit-icon bg-primary text-white rounded-circle me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div class="benefit-content">
+                                        <h4 class="h6">Easy Customization</h4>
+                                        <p class="mb-0">Change colors, fonts, and layout with simple clicks</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="benefit-content">
-                                <h4>Trusted by 500+ Companies</h4>
-                                <p>Recruiters from top companies prefer this professional format</p>
+                            <div class="template-cta mt-4 d-flex align-items-center justify-content-between">
+                                <a href="/template_form.html" class="btn btn-primary">Use This Template</a>
+                                <!-- <span class="template-price fw-bold">₹499 one-time</span> -->
                             </div>
                         </div>
-                        
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-bolt"></i>
-                            </div>
-                            <div class="benefit-content">
-                                <h4>Effortless Professional Look</h4>
-                                <p>Showcase your professional side without design skills</p>
-                            </div>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="benefit-content">
-                                <h4>ATS Friendly</h4>
-                                <p>Optimized for Applicant Tracking Systems used by 99% of Fortune 500</p>
-                            </div>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="benefit-content">
-                                <h4>Fully Responsive</h4>
-                                <p>Looks perfect on all devices - desktop, tablet, and mobile</p>
-                            </div>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-palette"></i>
-                            </div>
-                            <div class="benefit-content">
-                                <h4>Easy Customization</h4>
-                                <p>Change colors, fonts, and layout with simple clicks</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="template-cta">
-                        <a href="#pricing" class="btn">Use This Template</a>
-                        <span class="template-price">₹499 one-time</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Partners Section -->
-    <section class="partners">
+    <section class="partners py-5 bg-light">
         <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Job Seekers at</h2>
-                <p>Our users have landed jobs at top companies across India</p>
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">Trusted by Job Seekers at</h2>
+                <p class="text-muted">Our users have landed jobs at top companies like</p>
             </div>
-            <div class="partners-logos">
-                <div class="partner-logo">
-                    <img src="/images/HDFC_Bank_Logo.svg.png">    
+            <div class="row g-4 justify-content-center">
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo text-center p-3">
+                        <img src="/images/HDFC_Bank_Logo.svg.png" alt="HDFC Bank" class="img-fluid">
+                    </div>
                 </div>
-                <div class="partner-logo">
-                    <img src="/images/Infosys_logo.svg.png">
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo text-center p-3">
+                        <img src="/images/Infosys_logo.svg.png" alt="Infosys" class="img-fluid">
+                    </div>
                 </div>
-                <div class="partner-logo">
-                    <img src="/images/tcs_logo.webp">
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo text-center p-3">
+                        <img src="images/accenture.png" alt="TCS" class="img-fluid">
+                    </div>
                 </div>
-                <div class="partner-logo">
-                    <img src="/images/wipro_logo.png">
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo text-center p-3">
+                        <img src="/images/wipro_logo.png" alt="Wipro" class="img-fluid">
+                    </div>
                 </div>
-                
-                <div class="partner-logo">
-                    <img src="/images/icici_logo.jpg">
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="partner-logo text-center p-3">
+                        <img src="images/pngegg.png" alt="ICICI" class="img-fluid">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
+    <section class="pricing py-5 bg-white" id="pricing">
         <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>One-time payment for a professional CV that gets results</p>
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">Simple, Transparent Pricing</h2>
+                <p class="text-muted">One-time payment for a professional CV that gets results</p>
             </div>
-            <div class="pricing-container">
-                <div class="pricing-card">
-                    <div class="pricing-badge">Most Popular</div>
-                    <h3>Professional CV</h3>
-                    <div class="price">₹499 <span>one-time</span></div>
-                    <p>Perfect for job seekers who want a professional, ATS-friendly CV</p>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Free AI Headshot Enhancement</li>
-                        <li><i class="fas fa-check"></i> Professional CV Template</li>
-                        <li><i class="fas fa-check"></i> Easy-to-Use Editor</li>
-                        <li><i class="fas fa-check"></i> Download in PDF Format</li>
-                        <li><i class="fas fa-check"></i> Impress Employers</li>
-                        <li><i class="fas fa-check"></i> 24/7 Customer Support</li>
-                    </ul>
-                    <a href="#" class="btn">Get Started Now</a>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm position-relative">
+                        <div class="pricing-badge bg-primary text-white px-3 py-1 position-absolute top-0 end-0 rounded-start">Most Popular</div>
+                        <div class="card-body text-center">
+                            <h3 class="h4">Professional CV</h3>
+                            <div class="price display-5 fw-bold my-3">₹499 <span class="fs-6 text-muted">one-time</span></div>
+                            <p class="mb-4">Perfect for job seekers who want a professional, ATS-friendly CV</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Free AI Headshot Enhancement</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Professional CV Template</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Easy-to-Use Editor</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Download in PDF Format</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Impress Employers</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 24/7 Customer Support</li>
+                            </ul>
+                            <a href="/template_form.html" class="btn btn-primary w-100">Get Started Now</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
+    <section class="testimonials py-5 bg-light" id="testimonials">
         <div class="container">
-            <div class="section-title">
-                <h2>Success Stories</h2>
-                <p>See what our users have to say about their experience with CVPro</p>
+            <div class="text-center mb-5">
+                <h2 class="display-6 fw-bold">Success Stories</h2>
+                <p class="text-muted">See what our users have to say about their experience with CVPro</p>
             </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I landed 3 interviews in the first week after using my CVPro resume. The AI headshot feature made my photo look incredibly professional!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SP</div>
-                        <div class="author-info">
-                            <h4>Sarah Patel</h4>
-                            <p>Marketing Manager</p>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <p class="lead">"I landed 3 interviews in the first week after using my CVPro resume. The AI headshot feature made my photo look incredibly professional!"</p>
+                            <div class="testimonial-author d-flex align-items-center mt-4">
+                                <div class="author-avatar bg-primary text-white rounded-circle me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">SP</div>
+                                <div class="author-info">
+                                    <h4 class="h6 mb-0">Sarah Patel</h4>
+                                    <p class="text-muted mb-0">Marketing Manager</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"The template is modern and professional. I received compliments on my CV from multiple hiring managers. Worth every penny!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">RJ</div>
-                        <div class="author-info">
-                            <h4>Raj Joshi</h4>
-                            <p>Software Engineer</p>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <p class="lead">"The template is modern and professional. I received compliments on my CV from multiple hiring managers. Worth every penny!"</p>
+                            <div class="testimonial-author d-flex align-items-center mt-4">
+                                <div class="author-avatar bg-primary text-white rounded-circle me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">RJ</div>
+                                <div class="author-info">
+                                    <h4 class="h6 mb-0">Raj Joshi</h4>
+                                    <p class="text-muted mb-0">Software Engineer</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -293,56 +342,56 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Create Your Winning CV?</h2>
-            <p>Join thousands of professionals who have accelerated their career with CVPro</p>
-            <a href="#pricing" class="btn">Get Started Now</a>
+    <section class="cta py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="display-5 fw-bold">Ready to Create Your Winning CV?</h2>
+            <p class="lead mt-3">Join thousands of professionals who have accelerated their career with CVPro</p>
+            <a href="/template_form.html" class="btn btn-light btn-lg mt-3">Get Started Now</a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="bg-dark text-white py-5">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
+            <div class="row g-4">
+                <div class="col-md-3">
                     <h3>CVPro</h3>
                     <p>Creating professional CVs that help you land your dream job.</p>
                 </div>
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#templates">Template</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#features">Features</a></li>
+                <div class="col-md-3">
+                    <h4>Product</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#templates" class="text-white text-decoration-none">Template</a></li>
+                        <li><a href="#how-it-works" class="text-white text-decoration-none">How It Works</a></li>
+                        <li><a href="#pricing" class="text-white text-decoration-none">Pricing</a></li>
+                        <li><a href="#features" class="text-white text-decoration-none">Features</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact</a></li>
+                <div class="col-md-3">
+                    <h4>Company</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/about_us.html" class="text-white text-decoration-none">About Us</a></li>
+                        <!-- <li><a href="#" class="text-white text-decoration-none">Careers</a></li> -->
+                        <!-- <li><a href="#" class="text-white text-decoration-none">Blog</a></li> -->
+                        <!-- <li><a href="#" class="text-white text-decoration-none">Contact</a></li> -->
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h3>Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                <div class="col-md-3">
+                    <h4>Support</h4>
+                    <ul class="list-unstyled">
+                        <!-- <li><a href="#" class="text-white text-decoration-none">Help Center</a></li> -->
+                        <li><a href="/refund_policy.html" class="text-white text-decoration-none">Refunds Policy</a></li>
+                        <li><a href="/privacy_policy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="/tnc.html" class="text-white text-decoration-none">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2023 CVPro. All rights reserved.</p>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 CVPro. All rights reserved.</p>
             </div>
         </div>
     </footer>
-
 
 </body>
 </html>

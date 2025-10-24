@@ -2,50 +2,330 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional CV Template</title>
-    <link rel="stylesheet" href="/css/template.css">
-    <script src="/js/template.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        @page :first {
+        margin-top: 0px; /* First page ka top margin */
+}
+
+        @page :nth(2) {
+            margin-top: 40px; /* Second page ka top margin */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            min-height: 100vh;
+            width: 210mm;
+            height: 297mm;
+        }
+
+        .cv-container {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            position: relative;
+        }
+
+        .image-section {
+            height: 110mm;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .curve {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .cv-content {
+            padding: 0px;
+        }
+
+        .header-content {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .header-content h1 {
+            font-size: 36px;
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header-content h2 {
+            font-size: 20px;
+            color: #6b7280;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .contact-row {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .contact-item i {
+            color: #667eea;
+            width: 16px;
+            text-align: center;
+        }
+
+        .cv-body {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .left-column, .right-column {
+            display: table-cell;
+            vertical-align: top;
+            padding: 0 20px;
+            width: 50%;
+        }
+
+        section {
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+            font-weight: 600;
+        }
+
+        .about-section p {
+            line-height: 1.6;
+            color: #374151;
+            text-align: justify;
+        }
+
+        .personal-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .detail-item strong {
+            color: #374151;
+            font-weight: 600;
+            min-width: 80px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .languages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+        }
+
+        .proficiency {
+            font-size: 12px;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .experience-item {
+            margin-bottom: 25px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .job-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+            background: #f3f4f6;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .job-description {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .job-description li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            line-height: 1.5;
+            color: #374151;
+        }
+
+        .job-description li::before {
+            content: "▸";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .education-item {
+            margin-bottom: 20px;
+        }
+
+        .education-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .institution {
+            font-size: 14px;
+            color: #374151;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .certification-item {
+            margin-bottom: 8px;
+            color: #374151;
+            padding: 6px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .cv-container {
+                box-shadow: none;
+                margin: 0;
+            }
+            .controls {
+                display: none;
+            }
+            .image-section {
+                background: #667eea !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="cv-container">
         <!-- Top 30% Image Section -->
         <div class="image-section">
-            <!-- <div class="image-container">
-                <div class="photo-placeholder">
-                    <i class="fas fa-user"></i>
-                    <span>Click to Upload Professional Headshot</span>
-                </div>
-            </div> -->
-            <img src = "images/Professional_Headshot.png" alt="Headshot" class="headshot" id="headshot">
+            <img src="images/download.jpeg" alt="Headshot" class="headshot">
             <div class="curve"></div>
         </div>
 
         <!-- CV Content -->
         <div class="cv-content">
             <div class="header-content">
-                <h1 contenteditable="true" class="editable" data-field="name">John Doe</h1>
-                <h2 contenteditable="true" class="editable" data-field="title">Software Engineer</h2>
+                <h1>John Doe</h1>
+                <h2>Software Engineer</h2>
                 
                 <div class="contact-info">
                     <div class="contact-row">
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
-                            <span contenteditable="true" class="editable" data-field="email">johndoe@example.com</span>
+                            <span>johndoe@example.com</span>
                         </div>
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
-                            <span contenteditable="true" class="editable" data-field="phone">+1 183-456-7890</span>
+                            <span>+1 183-456-7890</span>
                         </div>
                     </div>
                     <div class="contact-row">
                         <div class="contact-item">
                             <i class="fas fa-globe"></i>
-                            <span contenteditable="true" class="editable" data-field="website">portfolio.example.com</span>
+                            <span>portfolio.example.com</span>
                         </div>
                         <div class="contact-item">
                             <i class="fab fa-linkedin"></i>
-                            <span contenteditable="true" class="editable" data-field="linkedin">linkedin.com/in/johndoe</span>
+                            <span>linkedin.com/in/johndoe</span>
                         </div>
                     </div>
                 </div>
@@ -55,7 +335,7 @@
                 <div class="left-column">
                     <section class="about-section">
                         <h3>About</h3>
-                        <p contenteditable="true" class="editable" data-field="about">
+                        <p>
                             Passionate Software Engineer with 3 years of experience in full stack development. 
                             Skilled in scalable web applications, delivering seamless user experiences. 
                             Adept at cross-functional collaboration and leveraging modern tech stacks to solve real-world problems.
@@ -66,27 +346,27 @@
                         <h3>Personal Details</h3>
                         <div class="detail-item">
                             <strong>Email</strong>
-                            <span contenteditable="true" class="editable" data-field="personal-email">johndoe@example.com</span>
+                            <span>johndoe@example.com</span>
                         </div>
                         <div class="detail-item">
                             <strong>Phone</strong>
-                            <span contenteditable="true" class="editable" data-field="personal-phone">+1-135-456-7890</span>
+                            <span>+1-135-456-7890</span>
                         </div>
                         <div class="detail-item">
                             <strong>LinkedIn</strong>
-                            <span contenteditable="true" class="editable" data-field="personal-linkedin">linkedin.com/in/johndoe</span>
+                            <span>linkedin.com/in/johndoe</span>
                         </div>
                     </section>
 
                     <section class="skills-section">
                         <h3>Skills</h3>
                         <div class="skills-grid">
-                            <span contenteditable="true" class="skill-tag editable" data-field="skill1">JavaScript</span>
-                            <span contenteditable="true" class="skill-tag editable" data-field="skill2">React</span>
-                            <span contenteditable="true" class="skill-tag editable" data-field="skill3">Node.js</span>
-                            <span contenteditable="true" class="skill-tag editable" data-field="skill4">Python</span>
-                            <span contenteditable="true" class="skill-tag editable" data-field="skill5">AWS</span>
-                            <span contenteditable="true" class="skill-tag editable" data-field="skill6">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">HTML/CSS</span>
                         </div>
                     </section>
 
@@ -94,11 +374,11 @@
                         <h3>Languages</h3>
                         <div class="languages-list">
                             <div class="language-item">
-                                <span contenteditable="true" class="editable" data-field="lang1">English</span>
+                                <span>English</span>
                                 <span class="proficiency">Native</span>
                             </div>
                             <div class="language-item">
-                                <span contenteditable="true" class="editable" data-field="lang2">Spanish</span>
+                                <span>Spanish</span>
                                 <span class="proficiency">Intermediate</span>
                             </div>
                         </div>
@@ -110,34 +390,24 @@
                         <h3>Experience</h3>
                         <div class="experience-item">
                             <div class="job-header">
-                                <h4 contenteditable="true" class="editable" data-field="job1-title">Software Engineer</h4>
-                                <span contenteditable="true" class="date editable" data-field="job1-date">Jun 2020 – Present</span>
+                                <h4>Software Engineer</h4>
+                                <span class="date">Jun 2020 – Present</span>
                             </div>
                             <ul class="job-description">
-                                <li contenteditable="true" class="editable" data-field="job1-desc1">
-                                    Designed and implemented user features using React and Node.js
-                                </li>
-                                <li contenteditable="true" class="editable" data-field="job1-desc2">
-                                    Collaborated with design & QA teams to deliver high-impact features
-                                </li>
-                                <li contenteditable="true" class="editable" data-field="job1-desc3">
-                                    Optimized API performance, reducing latency by 23%
-                                </li>
+                                <li>Designed and implemented user features using React and Node.js</li>
+                                <li>Collaborated with design & QA teams to deliver high-impact features</li>
+                                <li>Optimized API performance, reducing latency by 23%</li>
                             </ul>
                         </div>
 
                         <div class="experience-item">
                             <div class="job-header">
-                                <h4 contenteditable="true" class="editable" data-field="job2-title">Web Developer</h4>
-                                <span contenteditable="true" class="date editable" data-field="job2-date">Jul 2018 – May 2020</span>
+                                <h4>Web Developer</h4>
+                                <span class="date">Jul 2018 – May 2020</span>
                             </div>
                             <ul class="job-description">
-                                <li contenteditable="true" class="editable" data-field="job2-desc1">
-                                    Developed responsive web applications using HTML, CSS and JavaScript
-                                </li>
-                                <li contenteditable="true" class="editable" data-field="job2-desc2">
-                                    Improved API performance by 15%
-                                </li>
+                                <li>Developed responsive web applications using HTML, CSS and JavaScript</li>
+                                <li>Improved API performance by 15%</li>
                             </ul>
                         </div>
                     </section>
@@ -145,42 +415,24 @@
                     <section class="education-section">
                         <h3>Education</h3>
                         <div class="education-item">
-                            <h4 contenteditable="true" class="editable" data-field="edu1-degree">Bachelor of Computer Science</h4>
-                            <span contenteditable="true" class="institution editable" data-field="edu1-school">University of Technology</span>
-                            <span contenteditable="true" class="date editable" data-field="edu1-date">2014 - 2018</span>
+                            <h4>Bachelor of Computer Science</h4>
+                            <span class="institution">University of Technology</span>
+                            <span class="date">2014 - 2018</span>
                         </div>
                     </section>
 
                     <section class="certifications-section">
                         <h3>Certifications</h3>
                         <div class="certification-item">
-                            <span contenteditable="true" class="editable" data-field="cert1">AWS Certified Developer - Associate</span>
+                            <span>AWS Certified Developer - Associate</span>
                         </div>
                         <div class="certification-item">
-                            <span contenteditable="true" class="editable" data-field="cert2">Google Data Analytics Certificate</span>
+                            <span>Google Data Analytics Certificate</span>
                         </div>
                     </section>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="controls">
-        <button id="uploadPhoto" class="control-btn">
-            <i class="fas fa-camera"></i> Upload Headshot
-        </button>
-        <button id="downloadCV" class="control-btn">
-            <i class="fas fa-download"></i> Download CV (₹499)
-        </button>
-        <button id="resetCV" class="control-btn">
-            <i class="fas fa-redo"></i> Reset
-        </button>
-    </div>
-
-    <input type="file" id="photoInput" accept="image/*" style="display: none;">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
