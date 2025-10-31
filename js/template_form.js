@@ -323,3 +323,62 @@ function submitForm() {
 
 // Initialize
 updateProgress();
+
+function saveFormData() {
+    // Collect all form data
+    const formData = {
+        name: document.getElementById('name').value,
+        designation: document.getElementById('designation').value,
+        portfolio: document.getElementById('portfolio').value,
+        linkedin: document.getElementById('linkedin').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        about: document.getElementById('about').value,
+        education: [],
+        experience: [],
+        skills: [],
+        languages: []
+    };
+
+    // Get Education
+    document.querySelectorAll('.education-item').forEach(item => {
+        formData.education.push({
+            school: item.querySelector('.edu-school').value,
+            degree: item.querySelector('.edu-degree').value,
+            year: item.querySelector('.edu-year').value
+        });
+    });
+
+    // Get Experience
+    document.querySelectorAll('.experience-item').forEach(item => {
+        formData.experience.push({
+            company: item.querySelector('.exp-company').value,
+            title: item.querySelector('.exp-title').value,
+            start: item.querySelector('.exp-start').value,
+            end: item.querySelector('.exp-end').value,
+            desc: item.querySelector('.exp-desc').value
+        });
+    });
+
+    // Get Skills
+    document.querySelectorAll('.skill-item').forEach(item => {
+        formData.skills.push({
+            name: item.querySelector('.skill-name').value,
+            level: item.querySelector('.skill-level').value
+        });
+    });
+
+    // Get Languages
+    document.querySelectorAll('.language-item').forEach(item => {
+        formData.languages.push({
+            name: item.querySelector('.lang-name').value,
+            level: item.querySelector('.lang-level').value
+        });
+    });
+
+    // Save to session storage
+    sessionStorage.setItem('cvData', JSON.stringify(formData));
+    
+    // Redirect to cart
+    window.location.href = '/cart.html';
+}
