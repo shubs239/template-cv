@@ -72,13 +72,13 @@ function validateSection(step) {
             }
 
             // LinkedIn URL validation
-            const linkedin = document.getElementById('linkedin');
-            if (!linkedin.value.trim()) {
-                const error = linkedin.nextElementSibling;
-                error.textContent = 'LinkedIn URL is required';
-                error.style.display = 'block';
-                isValid = false;
-            }
+            // const linkedin = document.getElementById('linkedin');
+            // if (!linkedin.value.trim()) {
+            //     const error = linkedin.nextElementSibling;
+            //     error.textContent = 'LinkedIn URL is required';
+            //     error.style.display = 'block';
+            //     isValid = false;
+            // }
 
             // Email validation
             const email = document.getElementById('email');
