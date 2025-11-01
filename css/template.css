@@ -85,6 +85,10 @@
     max-height: 150px;
     background: white; /* Optional: Add background to avoid transparent areas */
 }
+.error-message {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
 
 /* Responsive */
 @media (max-width: 768px) {

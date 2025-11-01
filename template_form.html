@@ -21,7 +21,7 @@
             <nav class="navbar navbar-expand-lg">
                 <a href="#" class="navbar-brand d-flex align-items-center">
                     <i class="fas fa-file-alt me-2 text-primary"></i>
-                    <span class="fw-bold">CVPro</span>
+                    <span class="fw-bold">Upgrade Me</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <i class="fas fa-bars"></i>
@@ -91,6 +91,7 @@
                     
                     <div class="photo-upload-area border rounded p-3 text-center">
                         <input type="file" id="headshot" class="form-control d-none" accept="image/*" onchange="previewImage(this)" required>
+                        <div class="error-message text-danger" style="display: none;"></div>
                         
                         <!-- Original Photo Preview -->
                         <div id="original-preview" class="photo-preview-container d-flex flex-column align-items-center justify-content-center">
@@ -112,26 +113,32 @@
                     <div class="col-md-6">
                         <label for="name" class="form-label">Name *</label>
                         <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                        <div class="error-message text-danger" style="display: none;"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="designation" class="form-label">Current Designation *</label>
                         <input type="text" id="designation" class="form-control" placeholder="Software Engineer" required>
+                        <div class="error-message text-danger" style="display: none;"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="portfolio" class="form-label">Portfolio Website (optional)</label>
                         <input type="url" id="portfolio" class="form-control" placeholder="https://portfolio.com">
+                        <div class="error-message text-danger" style="display: none;"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="linkedin" class="form-label">LinkedIn URL *</label>
                         <input type="url" id="linkedin" class="form-control" placeholder="https://linkedin.com/in/johndoe" required>
+                        <div class="error-message text-danger" style="display: none;"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email *</label>
                         <input type="email" id="email" class="form-control" placeholder="johndoe@example.com" required>
+                        <div class="error-message text-danger" style="display: none;"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="phone" class="form-label">Phone Number *</label>
                         <input type="tel" id="phone" class="form-control" placeholder="+1 123-456-7890" required>
+                        <div class="error-message text-danger" style="display: none;"></div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-4">
@@ -145,6 +152,7 @@
                 <div class="mb-3">
                     <label for="about" class="form-label">Tell us about yourself (max 300 words) *</label>
                     <textarea id="about" class="form-control" rows="5" placeholder="Passionate Software Engineer with 3 years of experience..." maxlength="300" required></textarea>
+                    <div class="error-message text-danger" style="display: none;"></div>
                 </div>
                 <div class="d-flex justify-content-between mt-4">
                     <button class="btn btn-outline-secondary" onclick="prevSection(2)">← Back</button>
@@ -161,14 +169,17 @@
                             <div class="col-md-6">
                                 <label for="edu-school-1" class="form-label">College/University Name *</label>
                                 <input type="text" class="form-control edu-school" placeholder="University of Technology" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="edu-degree-1" class="form-label">Degree *</label>
                                 <input type="text" class="form-control edu-degree" placeholder="Bachelor of Computer Science" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="edu-year-1" class="form-label">Year of Completion *</label>
                                 <input type="number" class="form-control edu-year" placeholder="2018" min="1900" max="2030" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                         </div>
                     </div>
@@ -189,22 +200,27 @@
                             <div class="col-md-6">
                                 <label for="exp-company-1" class="form-label">Company / Project Name *</label>
                                 <input type="text" class="form-control exp-company" placeholder="ABC Corp" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="exp-title-1" class="form-label">Role / Title *</label>
                                 <input type="text" class="form-control exp-title" placeholder="Software Engineer" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="exp-start-1" class="form-label">Start Year *</label>
                                 <input type="number" class="form-control exp-start" placeholder="2020" min="1900" max="2030" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="exp-end-1" class="form-label">End Year (or "Present")</label>
                                 <input type="text" class="form-control exp-end" placeholder="2023 or Present" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-12">
                                 <label for="exp-desc-1" class="form-label">Description (max 200 words) *</label>
                                 <textarea class="form-control exp-desc" rows="3" placeholder="Designed and implemented user features using React and Node.js..." maxlength="200" required></textarea>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                         </div>
                     </div>
@@ -225,6 +241,7 @@
                             <div class="col-md-6">
                                 <label for="skill-name-1" class="form-label">Skill Name *</label>
                                 <input type="text" class="form-control skill-name" placeholder="JavaScript" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="skill-level-1" class="form-label">Proficiency</label>
@@ -233,6 +250,7 @@
                                     <option value="Beginner">Beginner</option>
                                     <option value="Intermediate">Intermediate</option>
                                     <option value="Expert">Expert</option>
+                                    <div class="error-message text-danger" style="display: none;"></div>
                                 </select>
                             </div>
                         </div>
@@ -254,6 +272,7 @@
                             <div class="col-md-6">
                                 <label for="lang-name-1" class="form-label">Language Name *</label>
                                 <input type="text" class="form-control lang-name" placeholder="English" required>
+                                <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-md-6">
                                 <label for="lang-level-1" class="form-label">Proficiency</label>
@@ -263,6 +282,7 @@
                                     <option value="Fluent">Fluent</option>
                                     <option value="Intermediate">Intermediate</option>
                                     <option value="Basic">Basic</option>
+                                    <div class="error-message text-danger" style="display: none;"></div>
                                 </select>
                             </div>
                         </div>
@@ -282,11 +302,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>CVPro</h5>
+                    <h5>Upgrade Me</h5>
                     <p>Creating professional CVs that help you land your dream job.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p>&copy; 2025 CVPro. All rights reserved.</p>
+                    <p>&copy; 2025 Upgrade Me. All rights reserved.</p>
                 </div>
             </div>
         </div>

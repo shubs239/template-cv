@@ -18,9 +18,9 @@ function updateProgress() {
 }
 
 function nextSection(step) {
-    // Validate current section
+    // Only proceed if validation passes
     if (!validateSection(step)) {
-        alert("Please fill all required fields before proceeding.");
+        // Don't show alert — errors are already displayed on screen
         return;
     }
 
@@ -41,63 +41,176 @@ function prevSection(step) {
 
 function validateSection(step) {
     let isValid = true;
+    const section = document.getElementById(`section-${step}`);
 
+    // Clear all previous errors in this section
+    const errorMessages = section.querySelectorAll('.error-message');
+    errorMessages.forEach(el => {
+        el.style.display = 'none';
+        el.textContent = '';
+    });
+
+    // Validate based on section
     switch(step) {
-        case 1: // Contact
-            const name = document.getElementById('name').value.trim();
-            const designation = document.getElementById('designation').value.trim();
-            const linkedin = document.getElementById('linkedin').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const headshot = document.getElementById('headshot').files[0];
+        case 1: // Contact Details
+            // Name validation
+            const name = document.getElementById('name');
+            if (!name.value.trim()) {
+                const error = name.nextElementSibling;
+                error.textContent = 'Name is required';
+                error.style.display = 'block';
+                isValid = false;
+            }
 
-            if (!name || !designation || !linkedin || !email || !phone || !headshot) {
+            // Current Designation validation
+            const designation = document.getElementById('designation');
+            if (!designation.value.trim()) {
+                const error = designation.nextElementSibling;
+                error.textContent = 'Current Designation is required';
+                error.style.display = 'block';
+                isValid = false;
+            }
+
+            // LinkedIn URL validation
+            const linkedin = document.getElementById('linkedin');
+            if (!linkedin.value.trim()) {
+                const error = linkedin.nextElementSibling;
+                error.textContent = 'LinkedIn URL is required';
+                error.style.display = 'block';
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email');
+            if (!email.value.trim()) {
+                const error = email.nextElementSibling;
+                error.textContent = 'Email is required';
+                error.style.display = 'block';
+                isValid = false;
+            }
+
+            // Phone Number validation
+            const phone = document.getElementById('phone');
+            if (!phone.value.trim()) {
+                const error = phone.nextElementSibling;
+                error.textContent = 'Phone Number is required';
+                error.style.display = 'block';
+                isValid = false;
+            }
+
+            // Headshot validation
+            const headshot = document.getElementById('headshot');
+            if (!headshot.files.length) {
+                const error = headshot.parentElement.querySelector('.error-message');
+                error.textContent = 'Photo upload is required';
+                error.style.display = 'block';
                 isValid = false;
             }
             break;
 
-        case 2: // About
-            const about = document.getElementById('about').value.trim();
-            if (!about) isValid = false;
+        case 2: // About/Summary
+            const about = document.getElementById('about');
+            if (!about.value.trim()) {
+                const error = about.nextElementSibling;
+                error.textContent = 'About/Summary is required';
+                error.style.display = 'block';
+                isValid = false;
+            }
             break;
 
         case 3: // Education
-            const educationItems = document.querySelectorAll('.education-item');
+            const educationItems = section.querySelectorAll('.education-item');
             educationItems.forEach(item => {
-                const school = item.querySelector('.edu-school').value.trim();
-                const degree = item.querySelector('.edu-degree').value.trim();
-                const year = item.querySelector('.edu-year').value.trim();
-                if (!school || !degree || !year) isValid = false;
+                const school = item.querySelector('.edu-school');
+                const degree = item.querySelector('.edu-degree');
+                const year = item.querySelector('.edu-year');
+
+                if (school && !school.value.trim()) {
+                    const error = school.nextElementSibling;
+                    error.textContent = 'College/University Name is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+                if (degree && !degree.value.trim()) {
+                    const error = degree.nextElementSibling;
+                    error.textContent = 'Degree is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+                if (year && !year.value.trim()) {
+                    const error = year.nextElementSibling;
+                    error.textContent = 'Year of Completion is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
             });
             break;
 
         case 4: // Experience
-            const experienceItems = document.querySelectorAll('.experience-item');
+            const experienceItems = section.querySelectorAll('.experience-item');
             experienceItems.forEach(item => {
-                const company = item.querySelector('.exp-company').value.trim();
-                const title = item.querySelector('.exp-title').value.trim();
-                const start = item.querySelector('.exp-start').value.trim();
-                const end = item.querySelector('.exp-end').value.trim();
-                const desc = item.querySelector('.exp-desc').value.trim();
-                if (!company || !title || !start || !end || !desc) isValid = false;
+                const company = item.querySelector('.exp-company');
+                const title = item.querySelector('.exp-title');
+                const start = item.querySelector('.exp-start');
+                const end = item.querySelector('.exp-end');
+                const desc = item.querySelector('.exp-desc');
+
+                if (company && !company.value.trim()) {
+                    const error = company.nextElementSibling;
+                    error.textContent = 'Company/Project Name is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+                if (title && !title.value.trim()) {
+                    const error = title.nextElementSibling;
+                    error.textContent = 'Role/Title is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+                if (start && !start.value.trim()) {
+                    const error = start.nextElementSibling;
+                    error.textContent = 'Start Year is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+                if (end && !end.value.trim()) {
+                    const error = end.nextElementSibling;
+                    error.textContent = 'End Year is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
+                if (desc && !desc.value.trim()) {
+                    const error = desc.nextElementSibling;
+                    error.textContent = 'Description is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
             });
             break;
 
         case 5: // Skills
-            const skillItems = document.querySelectorAll('.skill-item');
+            const skillItems = section.querySelectorAll('.skill-item');
             skillItems.forEach(item => {
-                const name = item.querySelector('.skill-name').value.trim();
-                const level = item.querySelector('.skill-level').value;
-                if (!name || !level) isValid = false;
+                const name = item.querySelector('.skill-name');
+                if (name && !name.value.trim()) {
+                    const error = name.nextElementSibling;
+                    error.textContent = 'Skill Name is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
             });
             break;
 
         case 6: // Languages
-            const languageItems = document.querySelectorAll('.language-item');
+            const languageItems = section.querySelectorAll('.language-item');
             languageItems.forEach(item => {
-                const name = item.querySelector('.lang-name').value.trim();
-                const level = item.querySelector('.lang-level').value;
-                if (!name || !level) isValid = false;
+                const name = item.querySelector('.lang-name');
+                if (name && !name.value.trim()) {
+                    const error = name.nextElementSibling;
+                    error.textContent = 'Language Name is required';
+                    error.style.display = 'block';
+                    isValid = false;
+                }
             });
             break;
     }
