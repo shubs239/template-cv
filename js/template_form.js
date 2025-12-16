@@ -562,8 +562,10 @@ function saveFormData() {
     /* ---------- skills ---------- */
     document.querySelectorAll('.skill-item').forEach(item => {
         payload.skills.push({
-            name: item.querySelector('.skill-name').value.trim()
+            name: item.querySelector('.skill-name').value.trim(),
+            level: item.querySelector('.skill-level').value.trim() 
             // level is optional for Lambda
+            
         });
     });
 

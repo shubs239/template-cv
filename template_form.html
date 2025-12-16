@@ -150,8 +150,8 @@
             <div id="section-2" class="form-card p-4 mb-4 bg-white shadow-sm d-none">
                 <h2 class="h4 fw-bold mb-4">📝 About / Summary</h2>
                 <div class="mb-3">
-                    <label for="about" class="form-label">Tell us about yourself (max 300 words) *</label>
-                    <textarea id="about" class="form-control" rows="5" placeholder="Passionate Software Engineer with 3 years of experience..." maxlength="300" required></textarea>
+                    <label for="about" class="form-label">Tell us about yourself (max 500 words) *</label>
+                    <textarea id="about" class="form-control" rows="5" placeholder="Passionate Software Engineer with 3 years of experience..." maxlength="500" required></textarea>
                     <div class="error-message text-danger" style="display: none;"></div>
                 </div>
                 <div class="d-flex justify-content-between mt-4">
@@ -218,8 +218,8 @@
                                 <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                             <div class="col-12">
-                                <label for="exp-desc-1" class="form-label">Description (max 200 words) *</label>
-                                <textarea class="form-control exp-desc" rows="3" placeholder="Designed and implemented user features using React and Node.js..." maxlength="200" required></textarea>
+                                <label for="exp-desc-1" class="form-label">Description (max 1000 words) *</label>
+                                <textarea class="form-control exp-desc" rows="3" placeholder="Designed and implemented user features using React and Node.js..." maxlength="1000" required></textarea>
                                 <div class="error-message text-danger" style="display: none;"></div>
                             </div>
                         </div>
@@ -492,7 +492,9 @@ const waitForNext = setInterval(() => {
                     }
                     d.skills.forEach(s => {
                         addSkill();
-                        list.lastElementChild.querySelector('.skill-name').value = s.name;
+                        const last = list.lastElementChild;
+                        last.querySelector('.skill-name').value = s.name;
+                        last.querySelector('.skill-level').value = s.level || '';  // ← FIX: restore level
                     });
                 }
 
@@ -504,7 +506,11 @@ const waitForNext = setInterval(() => {
                     }
                     d.languages.forEach(l => {
                         addLanguage();
-                        list.lastElementChild.querySelector('.lang-name').value = l.name;
+                        // list.lastElementChild.querySelector('.lang-name').value = l.name;
+                        // last.querySelector('.lang-level').value = l.level || '';
+                        const last = list.lastElementChild;
+                        last.querySelector('.lang-name').value = l.name;
+                        last.querySelector('.lang-level').value = l.level || '';
                     });
                 }
             }, 0);
