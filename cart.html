@@ -62,7 +62,7 @@
                             </div>
                             
                             <!-- User Data Review -->
-                            <div class="mb-4">
+                            <!-- <div class="mb-4">
                                 <h5 class="mb-3"><i class="fas fa-user me-2 text-primary"></i>Personal Details</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
@@ -90,10 +90,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             
                             <!-- CV Summary -->
-                            <div class="mb-4">
+                            <!-- <div class="mb-4">
                                 <h5 class="mb-3"><i class="fas fa-file-alt me-2 text-primary"></i>CV Summary</h5>
                                 <div class="row g-3">
                                     <div class="col-md-6">
@@ -115,8 +115,69 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
+                            </div> -->
+                            <!-- Complete User Data Review -->
+<div class="mb-4">
+    <h5 class="mb-3"><i class="fas fa-user me-2 text-primary"></i>Personal Details</h5>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Name:</strong>
+                <div id="cart-name" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Email:</strong>
+                <div id="cart-email" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Phone:</strong>
+                <div id="cart-phone" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>LinkedIn:</strong>
+                <div id="cart-linkedin" class="text-muted"></div>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="mb-3 mt-4"><i class="fas fa-file-alt me-2 text-primary"></i>CV Summary</h5>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Designation:</strong>
+                <div id="cart-designation" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="p-3 bg-light rounded">
+                <strong>About:</strong>
+                <div id="cart-about" class="text-muted mt-2" style="min-height: 100px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Education -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-graduation-cap me-2 text-primary"></i>Education</h5>
+    <div id="cart-education" class="mb-3"></div>
+
+    <!-- Experience -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-briefcase me-2 text-primary"></i>Experience / Projects</h5>
+    <div id="cart-experience" class="mb-3"></div>
+
+    <!-- Skills -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-tools me-2 text-primary"></i>Skills</h5>
+    <div id="cart-skills" class="mb-3"></div>
+
+    <!-- Languages -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-language me-2 text-primary"></i>Languages</h5>
+    <div id="cart-languages" class="mb-3"></div>
+</div>
                             <!-- Price Section -->
                             <div class="d-flex justify-content-between align-items-center p-3 bg-primary text-white rounded mb-4">
                                 <div>
@@ -131,9 +192,9 @@
                                 <a href="/template_form.html" class="btn btn-outline-primary">
                                     <i class="fas fa-edit me-2"></i>Edit Details
                                 </a>
-                                <button id="proceed-to-payment" class="btn btn-primary btn-lg">
+                                <a href="https://rzp.io/rzp/kAIssIUw" id="proceed-to-payment" class="btn btn-primary btn-lg">
                                     Proceed to Payment <i class="fas fa-arrow-right ms-2"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -157,7 +218,7 @@
         </div>
     </footer>
 
-    <script>
+    <!-- <script>
         // Load cart data from session storage
         document.addEventListener('DOMContentLoaded', function() {
             const cvData = JSON.parse(sessionStorage.getItem('cvData'));
@@ -189,6 +250,70 @@
                 // window.location.href = '/payment.html'; // For real implementation
             });
         });
-    </script>
+    </script> -->
+<script>
+/* ---- show FULL summary ---- */
+document.addEventListener('DOMContentLoaded', () => {
+    const d = JSON.parse(sessionStorage.getItem('cvData') || '{}');
+    if (!d.name) { window.location.href='/template_form.html'; return; }
+
+    // Personal
+    document.getElementById('cart-name').textContent        = d.name;
+    document.getElementById('cart-email').textContent       = d.email;
+    document.getElementById('cart-phone').textContent       = d.phone;
+    document.getElementById('cart-linkedin').textContent    = d.linkedin;
+    document.getElementById('cart-designation').textContent = d.designation;
+    document.getElementById('cart-about').textContent       = d.about;
+
+    // Education
+    const eduDiv = document.getElementById('cart-education');
+    eduDiv.innerHTML = '';
+    (d.education || []).forEach(ed => {
+        eduDiv.insertAdjacentHTML('beforeend', `
+            <div class="p-3 bg-light rounded mb-2">
+                <strong>${ed.school}</strong> – ${ed.degree} (${ed.year})
+            </div>
+        `);
+    });
+
+    // Experience
+    const expDiv = document.getElementById('cart-experience');
+    expDiv.innerHTML = '';
+    (d.experience || []).forEach(exp => {
+        expDiv.insertAdjacentHTML('beforeend', `
+            <div class="p-3 bg-light rounded mb-2">
+                <strong>${exp.company}</strong> – ${exp.title} (${exp.start_year}–${exp.end_year})<br>
+                <small>${exp.descriptions[0]}</small>
+            </div>
+        `);
+    });
+
+    // Skills
+    const skillDiv = document.getElementById('cart-skills');
+    skillDiv.innerHTML = '';
+    (d.skills || []).forEach(s => {
+        skillDiv.insertAdjacentHTML('beforeend', `
+            <span class="badge bg-secondary me-2 mb-2">${s.name}</span>
+        `);
+    });
+
+    // Languages
+    const langDiv = document.getElementById('cart-languages');
+    langDiv.innerHTML = '';
+    (d.languages || []).forEach(l => {
+        langDiv.insertAdjacentHTML('beforeend', `
+            <span class="badge bg-secondary me-2 mb-2">${l.name} (${l.level})</span>
+        `);
+    });
+});
+
+/* ---- buttons ---- */
+document.getElementById('edit-details-btn').addEventListener('click', () =>
+    window.location.href = '/template_form.html'
+);
+document.getElementById('proceed-to-payment').addEventListener('click', () =>
+    window.location.href = 'https://rzp.io/rzp/kAIssIUw'
+);
+</script>
 </body>
 </html>

@@ -1,11 +1,11 @@
-let currentStep = 1;
+window.currentStep = 1;
 const totalSteps = 6;
 
 function updateProgress() {
     // Update step indicators
     const steps = document.querySelectorAll('.step');
     steps.forEach((step, index) => {
-        if (index + 1 <= currentStep) {
+        if (index + 1 <= window.currentStep) {
             step.classList.add('active');
             step.querySelector('.step-number').classList.remove('bg-secondary');
             step.querySelector('.step-number').classList.add('bg-primary');
@@ -25,16 +25,16 @@ function nextSection(step) {
     }
 
     document.getElementById(`section-${step}`).classList.add('d-none');
-    currentStep++;
-    document.getElementById(`section-${currentStep}`).classList.remove('d-none');
+    window.currentStep++;
+    document.getElementById(`section-${window.currentStep}`).classList.remove('d-none');
     updateProgress();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function prevSection(step) {
     document.getElementById(`section-${step}`).classList.add('d-none');
-    currentStep--;
-    document.getElementById(`section-${currentStep}`).classList.remove('d-none');
+    window.currentStep--;
+    document.getElementById(`section-${window.currentStep}`).classList.remove('d-none');
     updateProgress();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -99,13 +99,22 @@ function validateSection(step) {
             }
 
             // Headshot validation
-            const headshot = document.getElementById('headshot');
-            if (!headshot.files.length) {
-                const error = headshot.parentElement.querySelector('.error-message');
-                error.textContent = 'Photo upload is required';
-                error.style.display = 'block';
-                isValid = false;
-            }
+            // const headshot = document.getElementById('headshot');
+            // if (!headshot.files.length) {
+            //     const error = headshot.parentElement.querySelector('.error-message');
+            //     error.textContent = 'Photo upload is required';
+            //     error.style.display = 'block';
+            //     isValid = false;
+            // }
+            // ----  NEW photo rule : fresh file OR already-stored base64 ----
+                const headshot = document.getElementById('headshot');
+                const hasPhoto = headshot.files.length > 0 || sessionStorage.getItem('cvPhoto');
+                if (!hasPhoto) {
+                    const error = headshot.parentElement.querySelector('.error-message');
+                    error.textContent = 'Photo upload is required';
+                    error.style.display = 'block';
+                    isValid = false;
+}
             break;
 
         case 2: // About/Summary
@@ -337,42 +346,80 @@ function removeItem(button) {
     button.closest('.education-item, .experience-item, .skill-item, .language-item').remove();
 }
 
+// function previewImage(input) {
+//     const originalPreview = document.getElementById('original-preview');
+//     const uploadInstructions = document.getElementById('upload-instructions');
+//     const uploadedImage = document.getElementById('uploaded-image');
+//     const file = input.files[0];
+    
+//     if (file) {
+//         const reader = new FileReader();
+        
+        
+//         reader.onload = function(e) {
+//             const base64WithoutHeader = e.target.result.split(',')[1]; // strip "data:image/...;base64,"
+//             sessionStorage.setItem('cvPhoto', base64WithoutHeader);
+//             // Hide upload instructions
+
+//             if (uploadInstructions) {
+//                 uploadInstructions.style.display = 'none';
+//                 uploadInstructions.style.setProperty('display', 'none', 'important');
+//                 // console.log(uploadInstructions.style.getPropertyValue('display'));
+//             }
+            
+//             // Show uploaded image
+//             if (uploadedImage) {
+//                 uploadedImage.src = e.target.result;
+//                 uploadedImage.style.display = 'block';
+//             }
+            
+//         };
+        
+//         reader.readAsDataURL(file);
+//         console.log(base64WithoutHeader)
+//     } else {
+//         // Reset to upload instructions
+//         if (uploadInstructions) {
+//             uploadInstructions.style.display = 'flex';
+//         }
+//         if (uploadedImage) {
+//             uploadedImage.style.display = 'none';
+//         }
+//     }
+// }
 function previewImage(input) {
     const originalPreview = document.getElementById('original-preview');
     const uploadInstructions = document.getElementById('upload-instructions');
     const uploadedImage = document.getElementById('uploaded-image');
     const file = input.files[0];
-    
+
     if (file) {
         const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            // Hide upload instructions
+
+        reader.onload = function (e) {
+            /* ---- preview ---- */
             if (uploadInstructions) {
                 uploadInstructions.style.display = 'none';
                 uploadInstructions.style.setProperty('display', 'none', 'important');
-                // console.log(uploadInstructions.style.getPropertyValue('display'));
             }
-            
-            // Show uploaded image
             if (uploadedImage) {
                 uploadedImage.src = e.target.result;
                 uploadedImage.style.display = 'block';
             }
+
+            /* ---- store base64 ---- */
+            const base64WithoutHeader = e.target.result.split(',')[1];
+            sessionStorage.setItem('cvPhoto', base64WithoutHeader);
+            // console.log(base64WithoutHeader);
         };
-        
+
         reader.readAsDataURL(file);
     } else {
-        // Reset to upload instructions
-        if (uploadInstructions) {
-            uploadInstructions.style.display = 'flex';
-        }
-        if (uploadedImage) {
-            uploadedImage.style.display = 'none';
-        }
+        // reset
+        if (uploadInstructions) uploadInstructions.style.display = 'flex';
+        if (uploadedImage)   uploadedImage.style.display = 'none';
     }
 }
-
 function submitForm() {
     // Collect all data
     const formData = {
@@ -437,61 +484,127 @@ function submitForm() {
 // Initialize
 updateProgress();
 
+// function saveFormData() {
+//     // Collect all form data
+//     const formData = {
+//         name: document.getElementById('name').value,
+//         designation: document.getElementById('designation').value,
+//         portfolio: document.getElementById('portfolio').value,
+//         linkedin: document.getElementById('linkedin').value,
+//         email: document.getElementById('email').value,
+//         phone: document.getElementById('phone').value,
+//         about: document.getElementById('about').value,
+//         education: [],
+//         experience: [],
+//         skills: [],
+//         languages: []
+//     };
+
+//     // Get Education
+//     document.querySelectorAll('.education-item').forEach(item => {
+//         formData.education.push({
+//             school: item.querySelector('.edu-school').value,
+//             degree: item.querySelector('.edu-degree').value,
+//             year: item.querySelector('.edu-year').value
+//         });
+//     });
+
+//     // Get Experience
+//     document.querySelectorAll('.experience-item').forEach(item => {
+//         formData.experience.push({
+//             company: item.querySelector('.exp-company').value,
+//             title: item.querySelector('.exp-title').value,
+//             start: item.querySelector('.exp-start').value,
+//             end: item.querySelector('.exp-end').value,
+//             desc: item.querySelector('.exp-desc').value
+//         });
+//     });
+
+//     // Get Skills
+//     document.querySelectorAll('.skill-item').forEach(item => {
+//         formData.skills.push({
+//             name: item.querySelector('.skill-name').value,
+//             level: item.querySelector('.skill-level').value
+//         });
+//     });
+
+//     // Get Languages
+//     document.querySelectorAll('.language-item').forEach(item => {
+//         formData.languages.push({
+//             name: item.querySelector('.lang-name').value,
+//             level: item.querySelector('.lang-level').value
+//         });
+//     });
+
+//     // Save to session storage
+//     sessionStorage.setItem('cvData', JSON.stringify(formData));
+    
+//     // Redirect to cart
+//     window.location.href = '/cart.html';
+// }
 function saveFormData() {
-    // Collect all form data
-    const formData = {
-        name: document.getElementById('name').value,
-        designation: document.getElementById('designation').value,
-        portfolio: document.getElementById('portfolio').value,
-        linkedin: document.getElementById('linkedin').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        about: document.getElementById('about').value,
-        education: [],
-        experience: [],
-        skills: [],
-        languages: []
+    /* ---------- basic fields ---------- */
+    const payload = {
+        name        : document.getElementById('name').value.trim(),
+        designation : document.getElementById('designation').value.trim(),
+        email       : document.getElementById('email').value.trim(),
+        phone       : document.getElementById('phone').value.trim(),
+        linkedin    : document.getElementById('linkedin').value.trim(),
+        portfolio   : document.getElementById('portfolio').value.trim(),
+        about       : document.getElementById('about').value.trim(),
+        image_64    : sessionStorage.getItem('cvPhoto') || '', // photo already stripped
+        skills      : [],
+        languages   : [],
+        experience  : [],
+        education   : []
     };
 
-    // Get Education
-    document.querySelectorAll('.education-item').forEach(item => {
-        formData.education.push({
-            school: item.querySelector('.edu-school').value,
-            degree: item.querySelector('.edu-degree').value,
-            year: item.querySelector('.edu-year').value
-        });
-    });
-
-    // Get Experience
-    document.querySelectorAll('.experience-item').forEach(item => {
-        formData.experience.push({
-            company: item.querySelector('.exp-company').value,
-            title: item.querySelector('.exp-title').value,
-            start: item.querySelector('.exp-start').value,
-            end: item.querySelector('.exp-end').value,
-            desc: item.querySelector('.exp-desc').value
-        });
-    });
-
-    // Get Skills
+    /* ---------- skills ---------- */
     document.querySelectorAll('.skill-item').forEach(item => {
-        formData.skills.push({
-            name: item.querySelector('.skill-name').value,
-            level: item.querySelector('.skill-level').value
+        payload.skills.push({
+            name: item.querySelector('.skill-name').value.trim()
+            // level is optional for Lambda
         });
     });
 
-    // Get Languages
+    /* ---------- languages ---------- */
     document.querySelectorAll('.language-item').forEach(item => {
-        formData.languages.push({
-            name: item.querySelector('.lang-name').value,
-            level: item.querySelector('.lang-level').value
+        payload.languages.push({
+            name : item.querySelector('.lang-name').value.trim(),
+            level: item.querySelector('.lang-level').value.trim()
         });
     });
 
-    // Save to session storage
-    sessionStorage.setItem('cvData', JSON.stringify(formData));
-    
-    // Redirect to cart
+    /* ---------- experience ---------- */
+    // document.querySelectorAll('.experience-item').forEach(item => {
+    //     payload.experience.push({
+    //         title        : item.querySelector('.exp-title').value.trim(),
+    //         start_year   : item.querySelector('.exp-start').value.trim(),
+    //         end_year     : item.querySelector('.exp-end').value.trim(),
+    //         descriptions : [item.querySelector('.exp-desc').value.trim()] // array of bullets
+    //     });
+    // });
+
+    document.querySelectorAll('.experience-item').forEach(item => {
+    payload.experience.push({
+        company      : item.querySelector('.exp-company').value.trim(),  // ← ADD THIS LINE
+        title        : item.querySelector('.exp-title').value.trim(),
+        start_year   : item.querySelector('.exp-start').value.trim(),
+        end_year     : item.querySelector('.exp-end').value.trim(),
+        descriptions : [item.querySelector('.exp-desc').value.trim()]
+    });
+});
+
+    /* ---------- education ---------- */
+    document.querySelectorAll('.education-item').forEach(item => {
+        payload.education.push({
+            school : item.querySelector('.edu-school').value.trim(),
+            degree : item.querySelector('.edu-degree').value.trim(),
+            year   : item.querySelector('.edu-year').value.trim()
+        });
+    });
+
+    /* ---------- store & go ---------- */
+    sessionStorage.setItem('cvData', JSON.stringify(payload));
     window.location.href = '/cart.html';
 }

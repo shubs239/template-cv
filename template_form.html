@@ -314,5 +314,203 @@
 
     <!-- JavaScript -->
     <script src="/js/script.js"></script>
+<!-- <script>
+/* ==========  RESTORE – runs AFTER page fully ready  ========== */
+window.addEventListener('load', () => {
+    setTimeout(() => {  
+        /* ---- 2.  photo preview (use YOUR existing IDs) ---- */
+const photoB64 = sessionStorage.getItem('cvPhoto');
+if (photoB64) {
+    const img  = document.getElementById('uploaded-image');   // you already use this
+    const box  = document.getElementById('upload-instructions'); // you already use this
+    if (img && box) {
+        img.src = 'data:image/jpeg;base64,' + sessionStorage.getItem('cvPhoto');
+        img.style.display = 'block';
+        box.style.display = 'none';
+    }
+}             // next tick – script.js finished
+        if (!document.getElementById('section-1') ||
+            document.getElementById('section-1').classList.contains('d-none')) return;
+
+        const raw = sessionStorage.getItem('cvData');
+        if (!raw) return;            // first visit – nothing to restore
+        const d = JSON.parse(raw);
+
+        /* ---- 1.  basic inputs (section-1 only) ---- */
+        ['name','designation','portfolio','linkedin','email','phone','about']
+            .forEach(id => {
+                const el = document.getElementById(id);
+                if (el && d[id]) el.value = d[id];
+            });
+
+        /* ---- 2.  photo preview ---- */
+        if (sessionStorage.getItem('cvPhoto')) {
+            const img = document.getElementById('uploaded-image');
+            const ins = document.getElementById('upload-instructions');
+            if (img && ins) {
+                img.src = 'data:image/jpeg;base64,' + sessionStorage.getItem('cvPhoto');
+                img.style.display = 'block';
+                ins.style.display = 'none';
+            }
+        }
+
+        /* ---- 3.  repeater blocks – skip on 1st load (keep section-1 clean) ---- */
+        /* (if you WANT them here, move code inside this block) */
+    }, 0);
+});
+
+/* =====  populate repeaters as user reaches each section  ===== */
+const origNext = window.nextSection;   // keep original
+window.nextSection = function (step) {
+    origNext.call(this, step);          // run normal next/previous logic
+
+    const d = JSON.parse(sessionStorage.getItem('cvData') || '{}');
+
+    /* section 3 – education */
+    if (currentStep === 3 && d.education?.length &&
+        !document.querySelector('#education-list .education-item')) {
+        d.education.forEach(ed => {
+            addEducation();   // your existing helper
+            const last = document.querySelector('#education-list .education-item:last-child');
+            last.querySelector('.edu-school').value = ed.school;
+            last.querySelector('.edu-degree').value = ed.degree;
+            last.querySelector('.edu-year').value   = ed.year;
+        });
+    }
+
+    /* section 4 – experience */
+    if (currentStep === 4 && d.experience?.length &&
+        !document.querySelector('#experience-list .experience-item')) {
+        d.experience.forEach(exp => {
+            addExperience();
+            const last = document.querySelector('#experience-list .experience-item:last-child');
+            last.querySelector('.exp-title').value = exp.title;
+            last.querySelector('.exp-start').value = exp.start_year;
+            last.querySelector('.exp-end').value   = exp.end_year;
+            last.querySelector('.exp-desc').value  = (exp.descriptions||[])[0]||'';
+        });
+    }
+
+    /* section 5 – skills */
+    if (currentStep === 5 && d.skills?.length &&
+        !document.querySelector('#skills-list .skill-item')) {
+        d.skills.forEach(s => {
+            addSkill();
+            document.querySelector('#skills-list .skill-item:last-child .skill-name').value = s.name;
+        });
+    }
+
+    /* section 6 – languages */
+    if (currentStep === 6 && d.languages?.length &&
+        !document.querySelector('#languages-list .language-item')) {
+        d.languages.forEach(l => {
+            addLanguage();
+            document.querySelector('#languages-list .language-item:last-child .lang-name').value = l.name;
+        });
+    }
+};
+
+
+</script> -->
+<script>
+/* ==========  INITIAL RESTORE (section-1 only) ========== */
+window.addEventListener('load', () => {
+    const raw = sessionStorage.getItem('cvData');
+    if (raw) {
+        const d = JSON.parse(raw);
+        ['name','designation','portfolio','linkedin','email','phone','about'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && d[id]) el.value = d[id];
+        });
+    }
+
+    const photoB64 = sessionStorage.getItem('cvPhoto');
+    if (photoB64) {
+        const img = document.getElementById('uploaded-image');
+        const box = document.getElementById('upload-instructions');
+        if (img && box) {
+            img.src = 'data:image/jpeg;base64,' + photoB64;
+            img.style.display = 'block';
+            box.style.display = 'none';
+        }
+    }
+});
+
+/* ==========  POPULATE REPEATERS ON SECTION CHANGE ========== */
+const waitForNext = setInterval(() => {
+    if (typeof nextSection === 'function') {
+        clearInterval(waitForNext);
+        
+        const _realNext = nextSection;
+        nextSection = function(step) {
+            _realNext(step);
+
+            setTimeout(() => {
+                const d = JSON.parse(sessionStorage.getItem('cvData') || '{}');
+
+                // Section 3: Education – clear template then add all
+                if (window.currentStep === 3 && d.education?.length) {
+                    const list = document.getElementById('education-list');
+                    // Remove empty template if exists
+                    if (list.children.length === 1 && !list.children[0].querySelector('.edu-school').value) {
+                        list.innerHTML = '';
+                    }
+                    // Add saved items
+                    d.education.forEach(ed => {
+                        addEducation();
+                        const last = list.lastElementChild;
+                        last.querySelector('.edu-school').value = ed.school;
+                        last.querySelector('.edu-degree').value = ed.degree;
+                        last.querySelector('.edu-year').value = ed.year;
+                    });
+                }
+
+                // Section 4: Experience – clear template then add all (with company!)
+                if (window.currentStep === 4 && d.experience?.length) {
+                    const list = document.getElementById('experience-list');
+                    // Remove empty template if exists
+                    if (list.children.length === 1 && !list.children[0].querySelector('.exp-title').value) {
+                        list.innerHTML = '';
+                    }
+                    // Add saved items
+                    d.experience.forEach(exp => {
+                        addExperience();
+                        const last = list.lastElementChild;
+                        last.querySelector('.exp-company').value = exp.company;  // ← THIS WAS MISSING
+                        last.querySelector('.exp-title').value = exp.title;
+                        last.querySelector('.exp-start').value = exp.start_year;
+                        last.querySelector('.exp-end').value = exp.end_year;
+                        last.querySelector('.exp-desc').value = (exp.descriptions||[])[0]||'';
+                    });
+                }
+
+                // Section 5: Skills – clear template then add all
+                if (window.currentStep === 5 && d.skills?.length) {
+                    const list = document.getElementById('skills-list');
+                    if (list.children.length === 1 && !list.children[0].querySelector('.skill-name').value) {
+                        list.innerHTML = '';
+                    }
+                    d.skills.forEach(s => {
+                        addSkill();
+                        list.lastElementChild.querySelector('.skill-name').value = s.name;
+                    });
+                }
+
+                // Section 6: Languages – clear template then add all
+                if (window.currentStep === 6 && d.languages?.length) {
+                    const list = document.getElementById('languages-list');
+                    if (list.children.length === 1 && !list.children[0].querySelector('.lang-name').value) {
+                        list.innerHTML = '';
+                    }
+                    d.languages.forEach(l => {
+                        addLanguage();
+                        list.lastElementChild.querySelector('.lang-name').value = l.name;
+                    });
+                }
+            }, 0);
+        };
+    }
+}, 50);
+</script>
 </body>
 </html>
