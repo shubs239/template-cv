@@ -32,7 +32,7 @@ document.getElementById('dlBtn').onclick = async () => {
     const blob = await res.blob();
     const url  = window.URL.createObjectURL(blob);
     const a    = document.createElement('a');
-    a.href     = url; a.download = 'MyCV.pdf'; a.click();
+    a.href     = url; a.download = 'DigiPro_CV.pdf'; a.click();
     window.URL.revokeObjectURL(url);
     btn.textContent = 'Done ✓';
   } catch (e) {
