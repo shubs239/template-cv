@@ -17,7 +17,7 @@
 <script>
 const cvData  = JSON.parse(sessionStorage.getItem('cvData') || '{}');
 const cvPhoto = sessionStorage.getItem('cvPhoto');
-console.log(cvData, cvPhoto);
+// console.log(cvData, cvPhoto);
 document.getElementById('dlBtn').onclick = async () => {
   const btn = document.getElementById('dlBtn');
   btn.disabled = true; btn.textContent = 'Building…';
