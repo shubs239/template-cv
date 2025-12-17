@@ -587,13 +587,29 @@ function saveFormData() {
     //     });
     // });
 
-    document.querySelectorAll('.experience-item').forEach(item => {
+    // document.querySelectorAll('.experience-item').forEach(item => {
+    // payload.experience.push({
+    //     company      : item.querySelector('.exp-company').value.trim(),  // ← ADD THIS LINE
+    //     title        : item.querySelector('.exp-title').value.trim(),
+    //     start_year   : item.querySelector('.exp-start').value.trim(),
+    //     end_year     : item.querySelector('.exp-end').value.trim(),
+    //     descriptions : [item.querySelector('.exp-desc').value.trim()]
+    // });
+    /* ---------- experience ---------- */
+document.querySelectorAll('.experience-item').forEach(item => {
+    const rawText = item.querySelector('.exp-desc').value.trim();
+    // split on new-line or “•” or numbered list
+    const bullets = rawText
+        .split(/\r?\n|\•|\d+\./)          // break on line-break OR bullet OR “1.”
+        .map(b => b.trim())
+        .filter(b => b.length > 0);       // remove empty strings
+
     payload.experience.push({
-        company      : item.querySelector('.exp-company').value.trim(),  // ← ADD THIS LINE
+        company      : item.querySelector('.exp-company').value.trim(),
         title        : item.querySelector('.exp-title').value.trim(),
         start_year   : item.querySelector('.exp-start').value.trim(),
         end_year     : item.querySelector('.exp-end').value.trim(),
-        descriptions : [item.querySelector('.exp-desc').value.trim()]
+        descriptions : bullets            // ← now a real array
     });
 });
 
