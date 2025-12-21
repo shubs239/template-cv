@@ -184,7 +184,15 @@
                                     <h5 class="mb-0">Total</h5>
                                     <small>One-time payment</small>
                                 </div>
-                                <h2 class="mb-0">₹349 (Including GST)</h2>
+                                <div class="col-md-6 text-md-end">
+            <select id="currency-selector" class="form-select form-select-sm d-inline-block w-auto me-2">
+                <option value="INR" data-url="https://rzp.io/rzp/kAIssIUw" data-price="₹349">Pay in INR (India)</option>
+                <option value="AED" data-url="https://rzp.io/rzp/1sHTlKAm" data-price="20 AED">Pay in AED (Dubai)</option>
+                <option value="USD" data-url="https://rzp.io/rzp/AEUFAPM1" data-price="10 USD">Pay in USD</option>
+            </select>
+            <h2 id="display-price" class="mb-0 d-inline-block align-middle">₹349</h2>
+        </div>
+                                <!-- <h2 class="mb-0">₹349 (Including GST)</h2> -->
                             </div>
                             
                             <!-- Action Buttons -->
@@ -306,7 +314,22 @@ document.addEventListener('DOMContentLoaded', () => {
         `);
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const currencySelector = document.getElementById('currency-selector');
+    const priceDisplay = document.getElementById('display-price');
+    const paymentBtn = document.getElementById('proceed-to-payment');
 
+    currencySelector.addEventListener('change', function() {
+        // Get the selected option
+        const selectedOption = this.options[this.selectedIndex];
+        
+        // 1. Update the displayed price text
+        priceDisplay.textContent = selectedOption.getAttribute('data-price');
+        
+        // 2. Update the href of the payment button
+        paymentBtn.href = selectedOption.getAttribute('data-url');
+    });
+});
 /* ---- buttons ---- */
 document.getElementById('edit-details-btn').addEventListener('click', () =>
     window.location.href = '/template_form.html'
