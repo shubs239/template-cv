@@ -629,8 +629,10 @@ document.querySelectorAll('.experience-item').forEach(item => {
 try {
     sessionStorage.setItem('cvData', json);
 } catch (e) {
-    /* iOS private / quota – fall back to cookie */
     document.cookie = 'cvData=' + encodeURIComponent(json) + '; path=/; SameSite=Lax';
+    /* ---- iOS needs one tick to commit cookie ---- */
+    setTimeout(() => window.location.href = '/cart.html', 50);
+    return;
 }
 window.location.href = '/cart.html';
 }
