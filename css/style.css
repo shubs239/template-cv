@@ -9,6 +9,9 @@
     height: 50%;
     width: 50%;
 }
+.card-img-top {
+
+    height: 90%;
 
 .hero h1 {
     color: white;
@@ -22,6 +25,16 @@
 .hero .btn-outline-primary {
     border-color: white;
     color: white;
+}
+.comparison-image {
+    text-align: center;
+}
+
+.comparison-image img {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
 }
 
 .hero .btn-outline-primary:hover {
@@ -68,4 +81,4 @@
     .feature-card .card-body {
         padding: 1.5rem;
     }
-}
+}}
