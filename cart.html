@@ -254,7 +254,7 @@
 <script>
 /* ---- show FULL summary ---- */
 document.addEventListener('DOMContentLoaded', () => {
-    const d = JSON.parse(sessionStorage.getItem('cvData') || '{}');
+    const d = readCvData() || '{}';
     if (!d.name) { window.location.href='/template_form.html'; return; }
 
     // Personal
@@ -314,7 +314,14 @@ document.getElementById('edit-details-btn').addEventListener('click', () =>
 // document.getElementById('proceed-to-payment').addEventListener('click', () =>
 //     window.location.href = 'https://rzp.io/rzp/kAIssIUw'
 // );
-
+function readCvData() {
+    let data = sessionStorage.getItem('cvData');
+    if (!data) { // cookie fallback
+        const c = document.cookie.split('; ').find(row => row.startsWith('cvData='));
+        data = c ? decodeURIComponent(c.split('=')[1]) : null;
+    }
+    return data ? JSON.parse(data) : null;
+}
 </script>
 </body>
 </html>
