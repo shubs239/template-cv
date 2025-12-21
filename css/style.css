@@ -6,9 +6,12 @@
 }
 
 .img-fluid {
-    height: 50%;
-    width: 50%;
+    height: 90%;
+    width: 90%;
 }
+/* .img.img-fluid.rounded.shadow-sm {
+    width: 100%;
+} */
 .card-img-top {
 
     height: 90%;
@@ -80,5 +83,11 @@
 
     .feature-card .card-body {
         padding: 1.5rem;
+    }
+     .comparison {
+        padding: 3rem 1rem;
+    }
+    .comparison-image img {
+        border-radius: 8px;
     }
 }}

@@ -70,7 +70,7 @@ document.getElementById('dlBtn').onclick = async () => {
   btn.disabled = true; btn.textContent = 'Building…';
 
   try {
-    const res = await fetch('https://49tvi6iekj.execute-api.ap-south-1.amazonaws.com/prod', {
+    const res = await fetch('https://49tvi6iekj.execute-api.ap-south-1.amazonaws.com/prod/cv', {
       method : 'POST',
       headers: {'Content-Type':'application/json'},
       body   : JSON.stringify({...cvData, image_64: cvPhoto})

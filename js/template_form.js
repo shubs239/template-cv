@@ -623,6 +623,13 @@ document.querySelectorAll('.experience-item').forEach(item => {
     });
 
     /* ---------- store & go ---------- */
+    // sessionStorage.setItem('cvData', JSON.stringify(payload));
+    // window.location.href = '/cart.html';
+    try {
     sessionStorage.setItem('cvData', JSON.stringify(payload));
-    window.location.href = '/cart.html';
+} catch (e) {
+    /* iOS low-memory / private-browsing */
+    alert('Storage full – continuing without save'); // visible on iPhone
+}
+window.location.href = '/cart.html';
 }
