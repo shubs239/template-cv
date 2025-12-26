@@ -61,7 +61,7 @@ We do not guarantee interviews or job placement.</p>
     </footer>
   
 
-<script>
+<!-- <script>
 const cvData  = JSON.parse(sessionStorage.getItem('cvData') || '{}');
 const cvPhoto = sessionStorage.getItem('cvPhoto');
 // console.log(cvData, cvPhoto);
@@ -85,6 +85,50 @@ document.getElementById('dlBtn').onclick = async () => {
   } catch (e) {
     document.getElementById('msg').textContent = 'Error: ' + e;
     btn.disabled = false; btn.textContent = 'Retry';
+  }
+};
+</script> -->
+<script>
+// Retrieve data and the template ID
+const cvData  = JSON.parse(sessionStorage.getItem('cvData') || localStorage.getItem('cvData') || '{}');
+const cvPhoto = sessionStorage.getItem('cvPhoto');
+const templateId = sessionStorage.getItem('selectedTemplateId') || localStorage.getItem('selectedTemplateId') || 1; 
+
+document.getElementById('dlBtn').onclick = async () => {
+  const btn = document.getElementById('dlBtn');
+  btn.disabled = true; 
+  btn.textContent = 'Building…';
+
+  try {
+    // Construct the payload with the new 'id' field
+    const payload = {
+        ...cvData, 
+        image_64: cvPhoto,
+        id: parseInt(templateId) // This adds 1 or 2 to your Lambda payload
+    };
+
+    const res = await fetch('https://49tvi6iekj.execute-api.ap-south-1.amazonaws.com/prod/cv', {
+      method : 'POST',
+      headers: {'Content-Type':'application/json'},
+      body   : JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error('PDF generation failed');
+
+    const blob = await res.blob();
+    const url  = window.URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url; 
+    a.download = `DigiPro_CV_Template_${templateId}.pdf`; 
+    a.click();
+    
+    window.URL.revokeObjectURL(url);
+    btn.textContent = 'Done ✓';
+    btn.className = "btn btn-success btn-lg mt-3";
+  } catch (e) {
+    document.getElementById('msg').innerHTML = `<div class="alert alert-danger">${e.message}</div>`;
+    btn.disabled = false; 
+    btn.textContent = 'Retry';
   }
 };
 </script>

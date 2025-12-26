@@ -4,347 +4,391 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart | Digi Pro CV</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .template-selector input { display: none; }
+        .selection-card { cursor: pointer; border: 2px solid #dee2e6 !important; transition: 0.3s; position: relative; }
+        .template-selector input:checked + .selection-card { border-color: #0d6efd !important; background: #f8f9ff; }
+        .check-icon { position: absolute; top: 15px; right: 15px; color: #0d6efd; font-size: 1.5rem; display: none; }
+        .template-selector input:checked + .selection-card .check-icon { display: block; }
+        
+        /* Full Image Preview */
+        .cv-preview-img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .data-box { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 20px; }
+        .section-header { color: #0d6efd; font-weight: bold; border-bottom: 2px solid #f0f0f0; margin-bottom: 15px; padding-bottom: 5px; }
+    </style>
 </head>
-<body>
-    <!-- Header (Same as Landing Page) -->
-    <header class="bg-white shadow-sm">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg">
-                <a href="/index.html" class="navbar-brand d-flex align-items-center">
-                    <i class="fas fa-file-alt me-2 text-primary"></i>
-                    <span class="fw-bold">Digi Pro CV</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a href="/index.html" class="nav-link">Home</a></li>
-                        <!-- <li class="nav-item"><a href="/template_form.html" class="nav-link">Create CV</a></li>
-                        <li class="nav-item"><a href="#templates" class="nav-link">Templates</a></li>
-                        <li class="nav-item"><a href="#how-it-works" class="nav-link">How It Works</a></li>
-                        <li class="nav-item"><a href="#pricing" class="nav-link">Pricing</a></li>
-                        <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li> -->
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
+<body class="bg-light">
 
-    <!-- Cart Section -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-primary text-white">
-                            <h2 class="mb-0"><i class="fas fa-shopping-cart me-2"></i> Your CV Order</h2>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white py-3"><h4 class="mb-0">Finalize Your CV Order</h4></div>
+                    
+                    <div class="card-body p-4">
+                        <h5 class="mb-4 fw-bold">1. Select Template Plan</h5>
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-6">
+                                <label class="template-selector w-100">
+                                    <input type="radio" name="plan" value="354" checked onchange="updateUI()">
+                                    <div class="card selection-card p-3">
+                                        <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+                                        <img src="/images/templatecv_image.jpeg" class="cv-preview-img mb-3">
+                                        <div class="text-center fw-bold">Professional Plan - ₹354</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="template-selector w-100">
+                                    <input type="radio" name="plan" value="531" onchange="updateUI()">
+                                    <div class="card selection-card p-3">
+                                        <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+                                        <img src="/images/template2cv.png" class="cv-preview-img mb-3">
+                                        <div class="text-center fw-bold">Premium Executive - ₹531</div>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
-                        
-                        <!-- Order Summary -->
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="me-3">
-                                    <img src="/images/templatecv_image.jpeg" alt="CV Template" class="img-fluid rounded" style="max-height: 100px;">
+
+                        <h5 class="mb-4 fw-bold">2. Review All Details</h5>
+                        <div class="data-box mb-5">
+                            <div class="row g-3">
+                                <div class="col-md-4"><strong>Name:</strong> <div id="v-name"></div></div>
+                                <div class="col-md-4"><strong>Designation:</strong> <div id="v-designation"></div></div>
+                                <div class="col-md-4"><strong>Email:</strong> <div id="v-email"></div></div>
+                                <div class="col-md-4"><strong>Phone:</strong> <div id="v-phone"></div></div>
+                                <div class="col-md-4"><strong>LinkedIn:</strong> <div id="v-linkedin"></div></div>
+                                <div class="col-md-4"><strong>Portfolio:</strong> <div id="v-portfolio"></div></div>
+                                <div class="col-12"><strong>About:</strong> <div id="v-about" class="mt-1 text-muted"></div></div>
+                            </div>
+
+                            <div class="section-header mt-4">Experience</div>
+                            <div id="v-experience"></div>
+
+                            <div class="section-header mt-4">Education</div>
+                            <div id="v-education"></div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="section-header mt-4">Skills</div>
+                                    <div id="v-skills" class="d-flex flex-wrap gap-2"></div>
                                 </div>
-                                <div>
-                                    <h4 class="mb-1">Professional CV Template</h4>
-                                    <p class="text-muted mb-0">One-time payment | No refunds</p>
+                                <div class="col-md-6">
+                                    <div class="section-header mt-4">Languages</div>
+                                    <div id="v-languages"></div>
                                 </div>
                             </div>
-                            
-                            <!-- User Data Review -->
-                            <!-- <div class="mb-4">
-                                <h5 class="mb-3"><i class="fas fa-user me-2 text-primary"></i>Personal Details</h5>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="p-3 bg-light rounded">
-                                            <strong>Name:</strong>
-                                            <div id="cart-name" class="text-muted"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 bg-light rounded">
-                                            <strong>Email:</strong>
-                                            <div id="cart-email" class="text-muted"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 bg-light rounded">
-                                            <strong>Phone:</strong>
-                                            <div id="cart-phone" class="text-muted"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 bg-light rounded">
-                                            <strong>LinkedIn:</strong>
-                                            <div id="cart-linkedin" class="text-muted"></div>
-                                        </div>
-                                    </div>
+                        </div>
+
+                        <div class="p-4 bg-primary text-white rounded mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <select id="curr" class="form-select" onchange="updateUI()">
+                                        <option value="INR">Pay in INR (India)</option>
+                                        <option value="AED">Pay in AED (Dubai)</option>
+                                        <option value="USD">Pay in USD</option>
+                                    </select>
                                 </div>
-                            </div> -->
-                            
-                            <!-- CV Summary -->
-                            <!-- <div class="mb-4">
-                                <h5 class="mb-3"><i class="fas fa-file-alt me-2 text-primary"></i>CV Summary</h5>
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="p-3 bg-light rounded">
-                                            <strong>Designation:</strong>
-                                            <div id="cart-designation" class="text-muted"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 bg-light rounded">
-                                            <strong>Experience:</strong>
-                                            <div id="cart-experience" class="text-muted"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="p-3 bg-light rounded">
-                                            <strong>Summary:</strong>
-                                            <div id="cart-about" class="text-muted mt-2" style="min-height: 100px;"></div>
-                                        </div>
-                                    </div>
+                                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                                    <h2 id="v-total" class="fw-bold mb-0">₹354</h2>
                                 </div>
-                            </div> -->
-                            <!-- Complete User Data Review -->
-<div class="mb-4">
-    <h5 class="mb-3"><i class="fas fa-user me-2 text-primary"></i>Personal Details</h5>
-    <div class="row g-3">
-        <div class="col-md-6">
-            <div class="p-3 bg-light rounded">
-                <strong>Name:</strong>
-                <div id="cart-name" class="text-muted"></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="p-3 bg-light rounded">
-                <strong>Email:</strong>
-                <div id="cart-email" class="text-muted"></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="p-3 bg-light rounded">
-                <strong>Phone:</strong>
-                <div id="cart-phone" class="text-muted"></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="p-3 bg-light rounded">
-                <strong>LinkedIn:</strong>
-                <div id="cart-linkedin" class="text-muted"></div>
-            </div>
-        </div>
-    </div>
-
-    <h5 class="mb-3 mt-4"><i class="fas fa-file-alt me-2 text-primary"></i>CV Summary</h5>
-    <div class="row g-3">
-        <div class="col-md-6">
-            <div class="p-3 bg-light rounded">
-                <strong>Designation:</strong>
-                <div id="cart-designation" class="text-muted"></div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="p-3 bg-light rounded">
-                <strong>About:</strong>
-                <div id="cart-about" class="text-muted mt-2" style="min-height: 100px;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Education -->
-    <h5 class="mb-3 mt-4"><i class="fas fa-graduation-cap me-2 text-primary"></i>Education</h5>
-    <div id="cart-education" class="mb-3"></div>
-
-    <!-- Experience -->
-    <h5 class="mb-3 mt-4"><i class="fas fa-briefcase me-2 text-primary"></i>Experience / Projects</h5>
-    <div id="cart-experience" class="mb-3"></div>
-
-    <!-- Skills -->
-    <h5 class="mb-3 mt-4"><i class="fas fa-tools me-2 text-primary"></i>Skills</h5>
-    <div id="cart-skills" class="mb-3"></div>
-
-    <!-- Languages -->
-    <h5 class="mb-3 mt-4"><i class="fas fa-language me-2 text-primary"></i>Languages</h5>
-    <div id="cart-languages" class="mb-3"></div>
-</div>
-                            <!-- Price Section -->
-                            <div class="d-flex justify-content-between align-items-center p-3 bg-primary text-white rounded mb-4">
-                                <div>
-                                    <h5 class="mb-0">Total</h5>
-                                    <small>One-time payment</small>
-                                </div>
-                                <div class="col-md-6 text-md-end">
-            <select id="currency-selector" class="form-select form-select-sm d-inline-block w-auto me-2">
-                <option value="INR" data-url="https://rzp.io/rzp/kAIssIUw" data-price="₹349">Pay in INR (India)</option>
-                <option value="AED" data-url="https://rzp.io/rzp/1sHTlKAm" data-price="20 AED">Pay in AED (Dubai)</option>
-                <option value="USD" data-url="https://rzp.io/rzp/AEUFAPM1" data-price="10 USD">Pay in USD</option>
-            </select>
-            <h2 id="display-price" class="mb-0 d-inline-block align-middle">₹349</h2>
-        </div>
-                                <!-- <h2 class="mb-0">₹349 (Including GST)</h2> -->
                             </div>
-                            
-                            <!-- Action Buttons -->
-                            <div class="d-flex justify-content-between mt-4">
-                                <a href="/template_form.html" class="btn btn-outline-primary">
-                                    <i class="fas fa-edit me-2"></i>Edit Details
-                                </a>
-                                <a href="https://rzp.io/rzp/kAIssIUw" id="proceed-to-payment" class="btn btn-primary btn-lg">
-                                    Proceed to Payment <i class="fas fa-arrow-right ms-2"></i>
-                                </a>
-                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="/template_form.html" class="btn btn-outline-secondary btn-lg">Edit Data</a>
+                            <a href="#" id="pay-btn" class="btn btn-success btn-lg px-5 shadow">Proceed to Payment</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Digi Pro CV</h5>
-                    <p>Creating professional CVs that help you land your dream job.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p>&copy; 2025 Digi Pro CV. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <!-- <script>
-        // Load cart data from session storage
-        document.addEventListener('DOMContentLoaded', function() {
-            const cvData = JSON.parse(sessionStorage.getItem('cvData'));
-            
-            if (!cvData) {
-                window.location.href = '/template_form.html';
-                return;
-            }
-            
-            // Fill personal details
-            document.getElementById('cart-name').textContent = cvData.name || 'N/A';
-            document.getElementById('cart-email').textContent = cvData.email || 'N/A';
-            document.getElementById('cart-phone').textContent = cvData.phone || 'N/A';
-            document.getElementById('cart-linkedin').textContent = cvData.linkedin || 'N/A';
-            
-            // Fill CV summary
-            document.getElementById('cart-designation').textContent = cvData.designation || 'N/A';
-            document.getElementById('cart-about').textContent = cvData.about || 'N/A';
-            
-            // Count experience
-            const experienceCount = cvData.experience ? cvData.experience.length : 0;
-            document.getElementById('cart-experience').textContent = 
-                experienceCount + (experienceCount === 1 ? ' role' : ' roles');
-            
-            // Payment button action
-            document.getElementById('proceed-to-payment').addEventListener('click', function() {
-                // In real app, this would call your Lambda payment function
-                alert("Payment processing... In production, this would redirect to payment gateway");
-                // window.location.href = '/payment.html'; // For real implementation
-            });
-        });
-    </script> -->
-<script>
-/* ---- show FULL summary ---- */
-document.addEventListener('DOMContentLoaded', () => {
-    const d = readCvData() || '{}';
-    if (!d.name) { window.location.href='/template_form.html'; return; }
+        const pricing = {
+            "354": { "INR": "₹354", "AED": "20 AED", "USD": "10 USD", "url": "https://rzp.io/rzp/kAIssIUw" },
+            "531": { "INR": "₹531", "AED": "30 AED", "USD": "15 USD", "url": "https://rzp.io/rzp/PREMIUM_LINK" }
+        };
 
-    // Personal
-    document.getElementById('cart-name').textContent        = d.name;
-    document.getElementById('cart-email').textContent       = d.email;
-    document.getElementById('cart-phone').textContent       = d.phone;
-    document.getElementById('cart-linkedin').textContent    = d.linkedin;
-    document.getElementById('cart-designation').textContent = d.designation;
-    document.getElementById('cart-about').textContent       = d.about;
+        function updateUI() {
+            const plan = document.querySelector('input[name="plan"]:checked').value;
+            const cur = document.getElementById('curr').value;
+            document.getElementById('v-total').textContent = pricing[plan][cur];
+            document.getElementById('pay-btn').href = pricing[plan].url;
+        }
 
-    // Education
-    const eduDiv = document.getElementById('cart-education');
-    eduDiv.innerHTML = '';
-    (d.education || []).forEach(ed => {
-        eduDiv.insertAdjacentHTML('beforeend', `
-            <div class="p-3 bg-light rounded mb-2">
-                <strong>${ed.school}</strong> – ${ed.degree} (${ed.year})
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const data = JSON.parse(localStorage.getItem('cvData') || sessionStorage.getItem('cvData'));
+        //     if (!data) return;
+        //     console.log(data);
+        //     document.getElementById('v-name').textContent = data.name;
+        //     document.getElementById('v-designation').textContent = data.designation;
+        //     document.getElementById('v-email').textContent = data.email;
+        //     document.getElementById('v-phone').textContent = data.phone;
+        //     document.getElementById('v-linkedin').textContent = data.linkedin || 'N/A';
+        //     document.getElementById('v-portfolio').textContent = data.portfolio || 'N/A';
+        //     document.getElementById('v-about').textContent = data.about;
+
+        //     document.getElementById('v-experience').innerHTML = data.experience.map(e => 
+        //         `<div class="mb-2"><strong>${e.company}</strong> - ${e.title} (${e.start_year}-${e.end_year})</div>`
+        //     ).join('');
+
+        //     document.getElementById('v-education').innerHTML = data.education.map(e => 
+        //         `<div class="mb-2"><strong>${e.school}</strong> - ${e.degree} (${e.year})</div>`
+        //     ).join('');
+
+        //     document.getElementById('v-skills').innerHTML = data.skills.map(s => 
+        //         `<span class="badge bg-light text-primary border border-primary px-3 py-2">${s.name} (${s.level})</span>`
+        //     ).join('');
+
+        //     document.getElementById('v-languages').innerHTML = data.languages.map(l => 
+        //         `<div>• ${l.name} (${l.level})</div>`
+        //     ).join('');
+
+        //     updateUI();
+        // });
+    function renderDetails(data) {
+    if (!data) return;
+
+    // Basic Fields
+    document.getElementById('v-name').textContent = data.name || 'N/A';
+    document.getElementById('v-designation').textContent = data.designation || 'N/A';
+    document.getElementById('v-email').textContent = data.email || 'N/A';
+    document.getElementById('v-phone').textContent = data.phone || 'N/A';
+    document.getElementById('v-linkedin').textContent = data.linkedin || 'N/A';
+    document.getElementById('v-portfolio').textContent = data.portfolio || 'N/A';
+    document.getElementById('v-about').textContent = data.about || 'N/A';
+
+    // Experience Rendering
+    const expContainer = document.getElementById('v-experience');
+    expContainer.innerHTML = (data.experience && data.experience.length > 0) 
+        ? data.experience.map(exp => `
+            <div class="mb-2">
+                <strong>${exp.company}</strong> — ${exp.title} (${exp.start_year} - ${exp.end_year})
             </div>
-        `);
-    });
+        `).join('') 
+        : '<div class="text-muted italic">No experience added</div>';
 
-    // Experience
-    const expDiv = document.getElementById('cart-experience');
-    expDiv.innerHTML = '';
-    (d.experience || []).forEach(exp => {
-        expDiv.insertAdjacentHTML('beforeend', `
-            <div class="p-3 bg-light rounded mb-2">
-                <strong>${exp.company}</strong> – ${exp.title} (${exp.start_year}–${exp.end_year})<br>
-                <small>${exp.descriptions[0]}</small>
+    // Education Rendering
+    const eduContainer = document.getElementById('v-education');
+    eduContainer.innerHTML = (data.education && data.education.length > 0)
+        ? data.education.map(edu => `
+            <div class="mb-2">
+                <strong>${edu.school}</strong> — ${edu.degree} (${edu.year})
             </div>
-        `);
-    });
+        `).join('')
+        : '<div class="text-muted italic">No education added</div>';
 
-    // Skills
-    const skillDiv = document.getElementById('cart-skills');
-    skillDiv.innerHTML = '';
-    (d.skills || []).forEach(s => {
-        skillDiv.insertAdjacentHTML('beforeend', `
-            <span class="badge bg-secondary me-2 mb-2">${s.name}</span>
-        `);
-    });
+    // Skills Rendering
+    const skillContainer = document.getElementById('v-skills');
+    skillContainer.innerHTML = (data.skills && data.skills.length > 0)
+        ? data.skills.map(s => `<span class="badge bg-light text-primary border border-primary px-3 py-2">${s.name} ${s.level ? '(' + s.level + ')' : ''}</span>`).join('')
+        : '<div class="text-muted italic w-100">No skills added</div>';
 
-    // Languages
-    const langDiv = document.getElementById('cart-languages');
-    langDiv.innerHTML = '';
-    (d.languages || []).forEach(l => {
-        langDiv.insertAdjacentHTML('beforeend', `
-            <span class="badge bg-secondary me-2 mb-2">${l.name} (${l.level})</span>
-        `);
-    });
-});
-document.addEventListener('DOMContentLoaded', function() {
-    const currencySelector = document.getElementById('currency-selector');
-    const priceDisplay = document.getElementById('display-price');
-    const paymentBtn = document.getElementById('proceed-to-payment');
-
-    currencySelector.addEventListener('change', function() {
-        // Get the selected option
-        const selectedOption = this.options[this.selectedIndex];
-        
-        // 1. Update the displayed price text
-        priceDisplay.textContent = selectedOption.getAttribute('data-price');
-        
-        // 2. Update the href of the payment button
-        paymentBtn.href = selectedOption.getAttribute('data-url');
-    });
-});
-/* ---- buttons ---- */
-document.getElementById('edit-details-btn').addEventListener('click', () =>
-    window.location.href = '/template_form.html'
-);
-// document.getElementById('proceed-to-payment').addEventListener('click', () =>
-//     window.location.href = 'https://rzp.io/rzp/kAIssIUw'
-// );
-function readCvData() {
-    let data = sessionStorage.getItem('cvData');
-    if (!data) { // cookie fallback
-        const c = document.cookie.split('; ').find(row => row.startsWith('cvData='));
-        data = c ? decodeURIComponent(c.split('=')[1]) : null;
-    }
-    return data ? JSON.parse(data) : null;
+    // Languages Rendering
+    const langContainer = document.getElementById('v-languages');
+    langContainer.innerHTML = (data.languages && data.languages.length > 0)
+        ? data.languages.map(l => `<div class="small">• ${l.name} (${l.level})</div>`).join('')
+        : '<div class="text-muted italic">No languages added</div>';
 }
+    
+    </script> -->
+<!-- <script>
+    // 1. PAYMENT LINK DATABASE
+    const pricing = {
+        "354": { "INR": "₹354", "AED": "20 AED", "USD": "10 USD", "url": "https://rzp.io/rzp/kAIssIUw" },
+        "531": { "INR": "₹531", "AED": "30 AED", "USD": "15 USD", "url": "https://rzp.io/rzp/PREMIUM_LINK" }
+    };
+
+    // 2. UPDATE PRICE UI
+    // function updateUI() {
+    //     const plan = document.querySelector('input[name="plan"]:checked').value;
+    //     const cur = document.getElementById('curr').value;
+    //     document.getElementById('v-total').textContent = pricing[plan][cur];
+    //     document.getElementById('pay-btn').href = pricing[plan].url;
+    // }
+    function updateUI() {
+    const planValue = document.querySelector('input[name="plan"]:checked').value;
+    const cur = document.getElementById('curr').value;
+    
+    // Save the Template ID: 1 for 354, 2 for 531
+    const templateId = (planValue === "354") ? 1 : 2;
+    localStorage.setItem('selectedTemplateId', templateId);
+    sessionStorage.setItem('selectedTemplateId', templateId);
+    // console.log("Selected Template ID:", templateId);
+
+    document.getElementById('v-total').textContent = pricing[planValue][cur];
+    document.getElementById('pay-btn').href = pricing[planValue].url;
+}
+
+    // 3. RENDER ALL DETAILS
+    function renderDetails(data) {
+        if (!data) return;
+
+        // Basic Fields
+        document.getElementById('v-name').textContent = data.name || 'N/A';
+        document.getElementById('v-designation').textContent = data.designation || 'N/A';
+        document.getElementById('v-email').textContent = data.email || 'N/A';
+        document.getElementById('v-phone').textContent = data.phone || 'N/A';
+        document.getElementById('v-linkedin').textContent = data.linkedin || 'N/A';
+        document.getElementById('v-portfolio').textContent = data.portfolio || 'N/A';
+        document.getElementById('v-about').textContent = data.about || 'N/A';
+
+        // Experience Rendering
+        const expContainer = document.getElementById('v-experience');
+        expContainer.innerHTML = (data.experience && data.experience.length > 0) 
+            ? data.experience.map(exp => `
+                <div class="mb-2">
+                    <strong>${exp.company}</strong> — ${exp.title} (${exp.start_year} - ${exp.end_year})
+                </div>
+            `).join('') 
+            : '<div class="text-muted italic">No experience added</div>';
+
+        // Education Rendering
+        const eduContainer = document.getElementById('v-education');
+        eduContainer.innerHTML = (data.education && data.education.length > 0)
+            ? data.education.map(edu => `
+                <div class="mb-2">
+                    <strong>${edu.school}</strong> — ${edu.degree} (${edu.year})
+                </div>
+            `).join('')
+            : '<div class="text-muted italic">No education added</div>';
+
+        // Skills Rendering
+        const skillContainer = document.getElementById('v-skills');
+        skillContainer.innerHTML = (data.skills && data.skills.length > 0)
+            ? data.skills.map(s => `<span class="badge bg-light text-primary border border-primary px-3 py-2">${s.name} ${s.level ? '(' + s.level + ')' : ''}</span>`).join('')
+            : '<div class="text-muted italic w-100">No skills added</div>';
+
+        // Languages Rendering
+        const langContainer = document.getElementById('v-languages');
+        langContainer.innerHTML = (data.languages && data.languages.length > 0)
+            ? data.languages.map(l => `<div class="small">• ${l.name} (${l.level})</div>`).join('')
+            : '<div class="text-muted italic">No languages added</div>';
+    }
+
+    // 4. THE TRIGGER: This runs as soon as the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        // Fetch data from storage
+        
+        const rawData = localStorage.getItem('cvData') || sessionStorage.getItem('cvData');
+        
+        if (rawData) {
+            const data = JSON.parse(rawData);
+            // console.log("Data fetched successfully:", data);
+            
+            // Call the render function
+            renderDetails(data);
+            
+            // Set the initial price
+            updateUI();
+            // console.log("UI updated with initial price.");
+            // console.log(data.templateId)
+        } else {
+            console.error("No CV data found in storage!");
+            // Optional: alert("No data found, redirecting...");
+            // window.location.href = '/template_form.html';
+        }
+    });
+</script> -->
+<script>
+    // 1. UPDATED PAYMENT LINK DATABASE
+    // Each plan now contains unique URLs for every currency
+    const pricing = {
+        "354": { 
+            "INR": { label: "₹354", url: "https://rzp.io/rzp/kAIssIUw" },
+            "AED": { label: "20 AED", url: "https://rzp.io/rzp/1sHTlKAm" }, // Replace with your link
+            "USD": { label: "10 USD", url: "https://rzp.io/rzp/AEUFAPM1" }  // Replace with your link
+        },
+        "531": { 
+            "INR": { label: "₹531", url: "https://rzp.io/rzp/t30ToQt" }, // Replace with your link
+            "AED": { label: "40 AED", url: "https://rzp.io/rzp/1qAPcAB6" }, // Replace with your link
+            "USD": { label: "15 USD", url: "https://rzp.io/rzp/MjTdTg0l" }  // Replace with your link
+        }
+    };
+
+    // 2. UPDATED UI LOGIC
+    function updateUI() {
+        const planValue = document.querySelector('input[name="plan"]:checked').value;
+        const cur = document.getElementById('curr').value;
+        
+        // 1. Handle Template ID for Lambda
+        const templateId = (planValue === "354") ? 1 : 2;
+        localStorage.setItem('selectedTemplateId', templateId);
+        sessionStorage.setItem('selectedTemplateId', templateId);
+
+        // 2. Fetch the specific configuration for selected Plan + Currency
+        const config = pricing[planValue][cur];
+
+        // 3. Update the Price Label and the Payment Button URL
+        document.getElementById('v-total').textContent = config.label;
+        document.getElementById('pay-btn').href = config.url;
+
+        // Console log to verify the link change
+        // console.log(`Plan: ${templateId} | Currency: ${cur} | Link: ${config.url}`);
+    }
+
+    // 3. RENDER ALL DETAILS
+    function renderDetails(data) {
+        if (!data) return;
+
+        // Basic Fields
+        document.getElementById('v-name').textContent = data.name || 'N/A';
+        document.getElementById('v-designation').textContent = data.designation || 'N/A';
+        document.getElementById('v-email').textContent = data.email || 'N/A';
+        document.getElementById('v-phone').textContent = data.phone || 'N/A';
+        document.getElementById('v-linkedin').textContent = data.linkedin || 'N/A';
+        document.getElementById('v-portfolio').textContent = data.portfolio || 'N/A';
+        document.getElementById('v-about').textContent = data.about || 'N/A';
+
+        // Experience Rendering
+        const expContainer = document.getElementById('v-experience');
+        expContainer.innerHTML = (data.experience && data.experience.length > 0) 
+            ? data.experience.map(exp => `
+                <div class="mb-2">
+                    <strong>${exp.company}</strong> — ${exp.title} (${exp.start_year} - ${exp.end_year})
+                </div>
+            `).join('') 
+            : '<div class="text-muted italic">No experience added</div>';
+
+        // Education Rendering
+        const eduContainer = document.getElementById('v-education');
+        eduContainer.innerHTML = (data.education && data.education.length > 0)
+            ? data.education.map(edu => `
+                <div class="mb-2">
+                    <strong>${edu.school}</strong> — ${edu.degree} (${edu.year})
+                </div>
+            `).join('')
+            : '<div class="text-muted italic">No education added</div>';
+
+        // Skills Rendering
+        const skillContainer = document.getElementById('v-skills');
+        skillContainer.innerHTML = (data.skills && data.skills.length > 0)
+            ? data.skills.map(s => `<span class="badge bg-light text-primary border border-primary px-3 py-2">${s.name} ${s.level ? '(' + s.level + ')' : ''}</span>`).join('')
+            : '<div class="text-muted italic w-100">No skills added</div>';
+
+        // Languages Rendering
+        const langContainer = document.getElementById('v-languages');
+        langContainer.innerHTML = (data.languages && data.languages.length > 0)
+            ? data.languages.map(l => `<div class="small">• ${l.name} (${l.level})</div>`).join('')
+            : '<div class="text-muted italic">No languages added</div>';
+    }
+
+    // 4. TRIGGER ON LOAD
+    document.addEventListener('DOMContentLoaded', () => {
+        const rawData = localStorage.getItem('cvData') || sessionStorage.getItem('cvData');
+        
+        if (rawData) {
+            const data = JSON.parse(rawData);
+            renderDetails(data);
+            updateUI(); // Run once to set initial price and link
+        } else {
+            console.error("No CV data found in storage!");
+        }
+    });
 </script>
 </body>
 </html>

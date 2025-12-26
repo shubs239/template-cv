@@ -473,7 +473,7 @@ function submitForm() {
     });
 
     // Log for testing
-    console.log(formData);
+    // console.log(formData);
 
     // Here you can send data to backend or generate PDF
     alert("Form submitted successfully! Now generating your CV...");
@@ -542,97 +542,160 @@ updateProgress();
 //     // Redirect to cart
 //     window.location.href = '/cart.html';
 // }
+// function saveFormData() {
+//     /* ---------- basic fields ---------- */
+//     const payload = {
+//         templateId  : 1,
+//         name        : document.getElementById('name').value.trim(),
+//         designation : document.getElementById('designation').value.trim(),
+//         email       : document.getElementById('email').value.trim(),
+//         phone       : document.getElementById('phone').value.trim(),
+//         linkedin    : document.getElementById('linkedin').value.trim(),
+//         portfolio   : document.getElementById('portfolio').value.trim(),
+//         about       : document.getElementById('about').value.trim(),
+//         image_64    : sessionStorage.getItem('cvPhoto') || '', // photo already stripped
+//         skills      : [],
+//         languages   : [],
+//         experience  : [],
+//         education   : []
+//     };
+
+//     /* ---------- skills ---------- */
+//     document.querySelectorAll('.skill-item').forEach(item => {
+//         payload.skills.push({
+//             name: item.querySelector('.skill-name').value.trim(),
+//             level: item.querySelector('.skill-level').value.trim() 
+//             // level is optional for Lambda
+            
+//         });
+//     });
+
+//     /* ---------- languages ---------- */
+//     document.querySelectorAll('.language-item').forEach(item => {
+//         payload.languages.push({
+//             name : item.querySelector('.lang-name').value.trim(),
+//             level: item.querySelector('.lang-level').value.trim()
+//         });
+//     });
+
+//     /* ---------- experience ---------- */
+//     // document.querySelectorAll('.experience-item').forEach(item => {
+//     //     payload.experience.push({
+//     //         title        : item.querySelector('.exp-title').value.trim(),
+//     //         start_year   : item.querySelector('.exp-start').value.trim(),
+//     //         end_year     : item.querySelector('.exp-end').value.trim(),
+//     //         descriptions : [item.querySelector('.exp-desc').value.trim()] // array of bullets
+//     //     });
+//     // });
+
+//     // document.querySelectorAll('.experience-item').forEach(item => {
+//     // payload.experience.push({
+//     //     company      : item.querySelector('.exp-company').value.trim(),  // ← ADD THIS LINE
+//     //     title        : item.querySelector('.exp-title').value.trim(),
+//     //     start_year   : item.querySelector('.exp-start').value.trim(),
+//     //     end_year     : item.querySelector('.exp-end').value.trim(),
+//     //     descriptions : [item.querySelector('.exp-desc').value.trim()]
+//     // });
+//     /* ---------- experience ---------- */
+// document.querySelectorAll('.experience-item').forEach(item => {
+//     const rawText = item.querySelector('.exp-desc').value.trim();
+//     // split on new-line or “•” or numbered list
+//     const bullets = rawText
+//         .split(/\r?\n|\•|\d+\./)          // break on line-break OR bullet OR “1.”
+//         .map(b => b.trim())
+//         .filter(b => b.length > 0);       // remove empty strings
+
+//     payload.experience.push({
+//         company      : item.querySelector('.exp-company').value.trim(),
+//         title        : item.querySelector('.exp-title').value.trim(),
+//         start_year   : item.querySelector('.exp-start').value.trim(),
+//         end_year     : item.querySelector('.exp-end').value.trim(),
+//         descriptions : bullets            // ← now a real array
+//     });
+// });
+
+//     /* ---------- education ---------- */
+//     document.querySelectorAll('.education-item').forEach(item => {
+//         payload.education.push({
+//             school : item.querySelector('.edu-school').value.trim(),
+//             degree : item.querySelector('.edu-degree').value.trim(),
+//             year   : item.querySelector('.edu-year').value.trim()
+//         });
+//     });
+
+//     /* ---------- store & go ---------- */
+//     // sessionStorage.setItem('cvData', JSON.stringify(payload));
+//     // window.location.href = '/cart.html';
+//    const json = JSON.stringify(payload);
+// try {
+//     sessionStorage.setItem('cvData', json);
+// } catch (e) {
+//     document.cookie = 'cvData=' + encodeURIComponent(json) + '; path=/; SameSite=Lax';
+//     /* ---- iOS needs one tick to commit cookie ---- */
+//     setTimeout(() => window.location.href = '/cart.html', 50);
+//     return;
+// }
+// window.location.href = '/cart.html';
+// }
 function saveFormData() {
-    /* ---------- basic fields ---------- */
     const payload = {
-        name        : document.getElementById('name').value.trim(),
-        designation : document.getElementById('designation').value.trim(),
-        email       : document.getElementById('email').value.trim(),
-        phone       : document.getElementById('phone').value.trim(),
-        linkedin    : document.getElementById('linkedin').value.trim(),
-        portfolio   : document.getElementById('portfolio').value.trim(),
-        about       : document.getElementById('about').value.trim(),
-        image_64    : sessionStorage.getItem('cvPhoto') || '', // photo already stripped
-        skills      : [],
-        languages   : [],
-        experience  : [],
-        education   : []
+        name: document.getElementById('name').value.trim(),
+        designation: document.getElementById('designation').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        linkedin: document.getElementById('linkedin').value.trim(),
+        portfolio: document.getElementById('portfolio').value.trim(),
+        about: document.getElementById('about').value.trim(),
+        skills: [],
+        languages: [],
+        experience: [],
+        education: []
     };
 
-    /* ---------- skills ---------- */
+    // Skills
     document.querySelectorAll('.skill-item').forEach(item => {
         payload.skills.push({
             name: item.querySelector('.skill-name').value.trim(),
-            level: item.querySelector('.skill-level').value.trim() 
-            // level is optional for Lambda
-            
+            level: item.querySelector('.skill-level').value
         });
     });
 
-    /* ---------- languages ---------- */
+    // Languages
     document.querySelectorAll('.language-item').forEach(item => {
         payload.languages.push({
-            name : item.querySelector('.lang-name').value.trim(),
-            level: item.querySelector('.lang-level').value.trim()
+            name: item.querySelector('.lang-name').value.trim(),
+            level: item.querySelector('.lang-level').value
         });
     });
 
-    /* ---------- experience ---------- */
-    // document.querySelectorAll('.experience-item').forEach(item => {
-    //     payload.experience.push({
-    //         title        : item.querySelector('.exp-title').value.trim(),
-    //         start_year   : item.querySelector('.exp-start').value.trim(),
-    //         end_year     : item.querySelector('.exp-end').value.trim(),
-    //         descriptions : [item.querySelector('.exp-desc').value.trim()] // array of bullets
-    //     });
-    // });
+    // Experience
+    document.querySelectorAll('.experience-item').forEach(item => {
+        const rawText = item.querySelector('.exp-desc').value.trim();
+        const bullets = rawText.split(/\r?\n/).map(b => b.trim()).filter(b => b.length > 0);
 
-    // document.querySelectorAll('.experience-item').forEach(item => {
-    // payload.experience.push({
-    //     company      : item.querySelector('.exp-company').value.trim(),  // ← ADD THIS LINE
-    //     title        : item.querySelector('.exp-title').value.trim(),
-    //     start_year   : item.querySelector('.exp-start').value.trim(),
-    //     end_year     : item.querySelector('.exp-end').value.trim(),
-    //     descriptions : [item.querySelector('.exp-desc').value.trim()]
-    // });
-    /* ---------- experience ---------- */
-document.querySelectorAll('.experience-item').forEach(item => {
-    const rawText = item.querySelector('.exp-desc').value.trim();
-    // split on new-line or “•” or numbered list
-    const bullets = rawText
-        .split(/\r?\n|\•|\d+\./)          // break on line-break OR bullet OR “1.”
-        .map(b => b.trim())
-        .filter(b => b.length > 0);       // remove empty strings
-
-    payload.experience.push({
-        company      : item.querySelector('.exp-company').value.trim(),
-        title        : item.querySelector('.exp-title').value.trim(),
-        start_year   : item.querySelector('.exp-start').value.trim(),
-        end_year     : item.querySelector('.exp-end').value.trim(),
-        descriptions : bullets            // ← now a real array
+        payload.experience.push({
+            company: item.querySelector('.exp-company').value.trim(),
+            title: item.querySelector('.exp-title').value.trim(),
+            start_year: item.querySelector('.exp-start').value.trim(),
+            end_year: item.querySelector('.exp-end').value.trim(),
+            descriptions: bullets
+        });
     });
-});
 
-    /* ---------- education ---------- */
+    // Education
     document.querySelectorAll('.education-item').forEach(item => {
         payload.education.push({
-            school : item.querySelector('.edu-school').value.trim(),
-            degree : item.querySelector('.edu-degree').value.trim(),
-            year   : item.querySelector('.edu-year').value.trim()
+            school: item.querySelector('.edu-school').value.trim(),
+            degree: item.querySelector('.edu-degree').value.trim(),
+            year: item.querySelector('.edu-year').value.trim()
         });
     });
 
-    /* ---------- store & go ---------- */
-    // sessionStorage.setItem('cvData', JSON.stringify(payload));
-    // window.location.href = '/cart.html';
-   const json = JSON.stringify(payload);
-try {
+    // Save to both for reliability
+    const json = JSON.stringify(payload);
+    localStorage.setItem('cvData', json);
     sessionStorage.setItem('cvData', json);
-} catch (e) {
-    document.cookie = 'cvData=' + encodeURIComponent(json) + '; path=/; SameSite=Lax';
-    /* ---- iOS needs one tick to commit cookie ---- */
-    setTimeout(() => window.location.href = '/cart.html', 50);
-    return;
-}
-window.location.href = '/cart.html';
+    // console.log(json);
+
+    window.location.href = '/cart.html';
 }

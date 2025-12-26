@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | Digi Pro CV</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Header (Same as Landing Page) -->
+    <header class="bg-white shadow-sm">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <a href="/index.html" class="navbar-brand d-flex align-items-center">
+                    <i class="fas fa-file-alt me-2 text-primary"></i>
+                    <span class="fw-bold">Digi Pro CV</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a href="/index.html" class="nav-link">Home</a></li>
+                        <!-- <li class="nav-item"><a href="/template_form.html" class="nav-link">Create CV</a></li>
+                        <li class="nav-item"><a href="#templates" class="nav-link">Templates</a></li>
+                        <li class="nav-item"><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                        <li class="nav-item"><a href="#pricing" class="nav-link">Pricing</a></li>
+                        <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li> -->
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Cart Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h2 class="mb-0"><i class="fas fa-shopping-cart me-2"></i> Your CV Order</h2>
+                        </div>
+                        
+                        <!-- Order Summary -->
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="me-3">
+                                    <img src="/images/templatecv_image.jpeg" alt="CV Template" class="img-fluid rounded" style="max-height: 100px;">
+                                </div>
+                                <div>
+                                    <h4 class="mb-1">Professional CV Template</h4>
+                                    <p class="text-muted mb-0">One-time payment | No refunds</p>
+                                </div>
+                            </div>
+                            
+                            <!-- User Data Review -->
+                            <!-- <div class="mb-4">
+                                <h5 class="mb-3"><i class="fas fa-user me-2 text-primary"></i>Personal Details</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <strong>Name:</strong>
+                                            <div id="cart-name" class="text-muted"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <strong>Email:</strong>
+                                            <div id="cart-email" class="text-muted"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <strong>Phone:</strong>
+                                            <div id="cart-phone" class="text-muted"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <strong>LinkedIn:</strong>
+                                            <div id="cart-linkedin" class="text-muted"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            
+                            <!-- CV Summary -->
+                            <!-- <div class="mb-4">
+                                <h5 class="mb-3"><i class="fas fa-file-alt me-2 text-primary"></i>CV Summary</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <strong>Designation:</strong>
+                                            <div id="cart-designation" class="text-muted"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="p-3 bg-light rounded">
+                                            <strong>Experience:</strong>
+                                            <div id="cart-experience" class="text-muted"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="p-3 bg-light rounded">
+                                            <strong>Summary:</strong>
+                                            <div id="cart-about" class="text-muted mt-2" style="min-height: 100px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- Complete User Data Review -->
+<div class="mb-4">
+    <h5 class="mb-3"><i class="fas fa-user me-2 text-primary"></i>Personal Details</h5>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Name:</strong>
+                <div id="cart-name" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Email:</strong>
+                <div id="cart-email" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Phone:</strong>
+                <div id="cart-phone" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>LinkedIn:</strong>
+                <div id="cart-linkedin" class="text-muted"></div>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="mb-3 mt-4"><i class="fas fa-file-alt me-2 text-primary"></i>CV Summary</h5>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="p-3 bg-light rounded">
+                <strong>Designation:</strong>
+                <div id="cart-designation" class="text-muted"></div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="p-3 bg-light rounded">
+                <strong>About:</strong>
+                <div id="cart-about" class="text-muted mt-2" style="min-height: 100px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Education -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-graduation-cap me-2 text-primary"></i>Education</h5>
+    <div id="cart-education" class="mb-3"></div>
+
+    <!-- Experience -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-briefcase me-2 text-primary"></i>Experience / Projects</h5>
+    <div id="cart-experience" class="mb-3"></div>
+
+    <!-- Skills -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-tools me-2 text-primary"></i>Skills</h5>
+    <div id="cart-skills" class="mb-3"></div>
+
+    <!-- Languages -->
+    <h5 class="mb-3 mt-4"><i class="fas fa-language me-2 text-primary"></i>Languages</h5>
+    <div id="cart-languages" class="mb-3"></div>
+</div>
+                            <!-- Price Section -->
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-primary text-white rounded mb-4">
+                                <div>
+                                    <h5 class="mb-0">Total</h5>
+                                    <small>One-time payment</small>
+                                </div>
+                                <div class="col-md-6 text-md-end">
+            <select id="currency-selector" class="form-select form-select-sm d-inline-block w-auto me-2">
+                <option value="INR" data-url="https://rzp.io/rzp/kAIssIUw" data-price="₹349">Pay in INR (India)</option>
+                <option value="AED" data-url="https://rzp.io/rzp/1sHTlKAm" data-price="20 AED">Pay in AED (Dubai)</option>
+                <option value="USD" data-url="https://rzp.io/rzp/AEUFAPM1" data-price="10 USD">Pay in USD</option>
+            </select>
+            <h2 id="display-price" class="mb-0 d-inline-block align-middle">₹349</h2>
+        </div>
+                                <!-- <h2 class="mb-0">₹349 (Including GST)</h2> -->
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="d-flex justify-content-between mt-4">
+                                <a href="/template_form.html" class="btn btn-outline-primary">
+                                    <i class="fas fa-edit me-2"></i>Edit Details
+                                </a>
+                                <a href="https://rzp.io/rzp/kAIssIUw" id="proceed-to-payment" class="btn btn-primary btn-lg">
+                                    Proceed to Payment <i class="fas fa-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Digi Pro CV</h5>
+                    <p>Creating professional CVs that help you land your dream job.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 Digi Pro CV. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- <script>
+        // Load cart data from session storage
+        document.addEventListener('DOMContentLoaded', function() {
+            const cvData = JSON.parse(sessionStorage.getItem('cvData'));
+            
+            if (!cvData) {
+                window.location.href = '/template_form.html';
+                return;
+            }
+            
+            // Fill personal details
+            document.getElementById('cart-name').textContent = cvData.name || 'N/A';
+            document.getElementById('cart-email').textContent = cvData.email || 'N/A';
+            document.getElementById('cart-phone').textContent = cvData.phone || 'N/A';
+            document.getElementById('cart-linkedin').textContent = cvData.linkedin || 'N/A';
+            
+            // Fill CV summary
+            document.getElementById('cart-designation').textContent = cvData.designation || 'N/A';
+            document.getElementById('cart-about').textContent = cvData.about || 'N/A';
+            
+            // Count experience
+            const experienceCount = cvData.experience ? cvData.experience.length : 0;
+            document.getElementById('cart-experience').textContent = 
+                experienceCount + (experienceCount === 1 ? ' role' : ' roles');
+            
+            // Payment button action
+            document.getElementById('proceed-to-payment').addEventListener('click', function() {
+                // In real app, this would call your Lambda payment function
+                alert("Payment processing... In production, this would redirect to payment gateway");
+                // window.location.href = '/payment.html'; // For real implementation
+            });
+        });
+    </script> -->
+<script>
+/* ---- show FULL summary ---- */
+document.addEventListener('DOMContentLoaded', () => {
+    const d = readCvData() || '{}';
+    if (!d.name) { window.location.href='/template_form.html'; return; }
+
+    // Personal
+    document.getElementById('cart-name').textContent        = d.name;
+    document.getElementById('cart-email').textContent       = d.email;
+    document.getElementById('cart-phone').textContent       = d.phone;
+    document.getElementById('cart-linkedin').textContent    = d.linkedin;
+    document.getElementById('cart-designation').textContent = d.designation;
+    document.getElementById('cart-about').textContent       = d.about;
+
+    // Education
+    const eduDiv = document.getElementById('cart-education');
+    eduDiv.innerHTML = '';
+    (d.education || []).forEach(ed => {
+        eduDiv.insertAdjacentHTML('beforeend', `
+            <div class="p-3 bg-light rounded mb-2">
+                <strong>${ed.school}</strong> – ${ed.degree} (${ed.year})
+            </div>
+        `);
+    });
+
+    // Experience
+    const expDiv = document.getElementById('cart-experience');
+    expDiv.innerHTML = '';
+    (d.experience || []).forEach(exp => {
+        expDiv.insertAdjacentHTML('beforeend', `
+            <div class="p-3 bg-light rounded mb-2">
+                <strong>${exp.company}</strong> – ${exp.title} (${exp.start_year}–${exp.end_year})<br>
+                <small>${exp.descriptions[0]}</small>
+            </div>
+        `);
+    });
+
+    // Skills
+    const skillDiv = document.getElementById('cart-skills');
+    skillDiv.innerHTML = '';
+    (d.skills || []).forEach(s => {
+        skillDiv.insertAdjacentHTML('beforeend', `
+            <span class="badge bg-secondary me-2 mb-2">${s.name}</span>
+        `);
+    });
+
+    // Languages
+    const langDiv = document.getElementById('cart-languages');
+    langDiv.innerHTML = '';
+    (d.languages || []).forEach(l => {
+        langDiv.insertAdjacentHTML('beforeend', `
+            <span class="badge bg-secondary me-2 mb-2">${l.name} (${l.level})</span>
+        `);
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const currencySelector = document.getElementById('currency-selector');
+    const priceDisplay = document.getElementById('display-price');
+    const paymentBtn = document.getElementById('proceed-to-payment');
+
+    currencySelector.addEventListener('change', function() {
+        // Get the selected option
+        const selectedOption = this.options[this.selectedIndex];
+        
+        // 1. Update the displayed price text
+        priceDisplay.textContent = selectedOption.getAttribute('data-price');
+        
+        // 2. Update the href of the payment button
+        paymentBtn.href = selectedOption.getAttribute('data-url');
+    });
+});
+/* ---- buttons ---- */
+document.getElementById('edit-details-btn').addEventListener('click', () =>
+    window.location.href = '/template_form.html'
+);
+// document.getElementById('proceed-to-payment').addEventListener('click', () =>
+//     window.location.href = 'https://rzp.io/rzp/kAIssIUw'
+// );
+function readCvData() {
+    let data = sessionStorage.getItem('cvData');
+    if (!data) { // cookie fallback
+        const c = document.cookie.split('; ').find(row => row.startsWith('cvData='));
+        data = c ? decodeURIComponent(c.split('=')[1]) : null;
+    }
+    return data ? JSON.parse(data) : null;
+}
+</script>
+</body>
+</html>
